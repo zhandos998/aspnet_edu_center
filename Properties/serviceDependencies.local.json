@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "type": "secrets.user"
+    },
+    "mssql1": {
+      "type": "mssql.local",
+      "connectionId": "aspnet_edu_center",
+      "secretStore": "LocalSecretsFile"
+    }
+  }
+}
