@@ -1,0 +1,51 @@
+﻿@model aspnet_edu_center.Models.Group
+
+@{
+    ViewData["Title"] = "DeleteGroup";
+}
+
+<h1>DeleteGroup</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Group</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Group_type)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Group_type)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Supervisor_id)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Supervisor_id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.date_form)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.date_form)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.date_to)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.date_to)
+        </dd>
+    </dl>
+    
+    <form asp-action="DeleteGroup">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="ViewGroups">Back to List</a>
+    </form>
+</div>

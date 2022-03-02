@@ -7,13 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using aspnet_edu_center.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using System.Web;
 
 namespace aspnet_edu_center.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -23,7 +24,15 @@ namespace aspnet_edu_center.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            return Content(User.Identity.Name);
+            if (User.IsInRole("1"))
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+            else if (User.IsInRole("2"))
+            {
+
+            }
+            return View();
         }
 
         public IActionResult Privacy()

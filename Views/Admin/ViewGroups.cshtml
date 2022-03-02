@@ -1,0 +1,59 @@
+﻿@model IEnumerable<aspnet_edu_center.Models.Group>
+
+@{
+    ViewData["Title"] = "ViewGroups";
+}
+
+<h1>ViewGroups</h1>
+
+<p>
+    <a asp-action="CreateGroup">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Group_type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Supervisor_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.date_form)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.date_to)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Group_type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Supervisor_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date_form)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date_to)
+            </td>
+            <td>
+                <a asp-action="EditGroup" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="DetailsGroup" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="DeleteGroup" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

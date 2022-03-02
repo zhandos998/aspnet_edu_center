@@ -3,95 +3,103 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using aspnet_edu_center.ViewModels; // пространство имен моделей RegisterModel и LoginModel
-using aspnet_edu_center.Models; // пространство имен UserContext и класса User
+using aspnet_edu_center.ViewModels;     // пространство имен моделей RegisterModel и LoginModel
+using aspnet_edu_center.Models;         // пространство имен UserContext и класса User
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
+
 namespace aspnet_edu_center.Controllers
 {
-    public class AccountController : Controller
+
+    namespace RolesApp.Controllers
     {
-        private UserContext db;
-        public AccountController(UserContext context)
+        public class AccountController : Controller
         {
-            db = context;
-        }
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginModel model)
-        {
-            if (ModelState.IsValid)
+            private ApplicationContext _context;
+            public AccountController(ApplicationContext context)
             {
-                User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
-                if (user != null)
-                {
-                    await Authenticate(model.Email); // аутентификация
-
-                    return RedirectToAction("Index", "Home");
-                }
-                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                _context = context;
             }
-            return View(model);
-        }
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterModel model)
-        {
-
-            //return Content(ModelState.ToString());
-            if (ModelState.IsValid)
+            [HttpGet]
+            public IActionResult Register()
             {
-                User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
-                if (user == null)
+                return View();
+            }
+            [HttpPost]
+            [ValidateAntiForgeryToken]
+            public async Task<IActionResult> Register(RegisterModel model)
+            {
+                if (ModelState.IsValid)
                 {
-                    // добавляем пользователя в бд
-                    db.Users.Add(new User {
-                        Name = model.Name, 
-                        Email = model.Email,
-                        Role_id = model.Role_id,
-                        Tel_num = model.Tel_num,
-                        Password = model.Password 
-                    });
-                    await db.SaveChangesAsync();
+                    User user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+                    if (user == null)
+                    {
+                        // добавляем пользователя в бд
+                        user = new User { Email = model.Email, Password = model.Password };
+                        Role userRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "student");
+                        if (userRole != null)
+                            user.Role_id = userRole.Id;
 
-                    await Authenticate(model.Email); // аутентификация
+                        _context.Users.Add(user);
+                        await _context.SaveChangesAsync();
 
-                    return RedirectToAction("Index", "Home");
+                        await Authenticate(user); // аутентификация
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                        ModelState.AddModelError("", "Некорректные логин и(или) пароль");
                 }
-                else
+                return View(model);
+            }
+            [HttpGet]
+            public IActionResult Login()
+            {
+                return View();
+            }
+            [HttpPost]
+            [ValidateAntiForgeryToken]
+            public async Task<IActionResult> Login(LoginModel model)
+            {
+                if (ModelState.IsValid)
+                {
+                    User user = await _context.Users
+                        //.Include(u => u.Role_id)
+                        .FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
+                    if (user != null)
+                    {
+                        await Authenticate(user); // аутентификация
+
+                        return RedirectToAction("Index", "Home");
+                    }
                     ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                }
+                return View(model);
             }
-            return View(model);
-        }
-
-        private async Task Authenticate(string userName)
-        {
-            // создаем один claim
-            var claims = new List<Claim>
+            private async Task Authenticate(User user)
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
+                // создаем один claim
+                var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role_id.ToString())
             };
-            // создаем объект ClaimsIdentity
-            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            // установка аутентификационных куки
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
-        }
+                // создаем объект ClaimsIdentity
+                ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
+                    ClaimsIdentity.DefaultRoleClaimType);
+                // установка аутентификационных куки
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+            }
 
-        public async Task<IActionResult> Logout()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login", "Account");
+            /// <summary>
+            /// Send an OpenID Connect sign-out request.
+            /// </summary>
+            public async void SignOut()
+            {
+                await HttpContext.SignOutAsync();
+                Response.Redirect("/");
+            }
         }
     }
 }
