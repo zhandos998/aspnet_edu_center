@@ -1,0 +1,63 @@
+﻿@model List<Dictionary<string, object>>
+
+@{
+    ViewData["Title"] = "View Group";
+}
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Tel_num
+            </th>
+            <th>
+                Group_type
+            </th>
+            <th>
+                Supervisor_id
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item["Name"]
+            </td>
+            <td>
+                @item["Email"]
+            </td>
+            <td>
+                @item["Tel_num"]
+            </td>
+            <td>
+                @item["Group_type"]
+            </td>
+            <td>
+                @item["Supervisor_id"]
+            </td>
+            <td>
+                @*<a asp-action="ViewAttendance" asp-route-id=@item["Id"]>Attendance</a>*@
+                <input id="checkbox" type="checkbox" />
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $('#checkbox').change(function() {
+       alert($(this).is(":checked"));
+    });
+</script>
+

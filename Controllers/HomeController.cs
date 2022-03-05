@@ -30,16 +30,12 @@ namespace aspnet_edu_center.Controllers
             }
             else if (User.IsInRole("2"))
             {
-
+                return RedirectToAction("Index", "Teacher");
             }
             return View();
         }
 
         public IActionResult Privacy()
-        {
-            return View();
-        }
-        public IActionResult Register()
         {
             return View();
         }

@@ -10,6 +10,7 @@ using System.Linq;
 
 namespace aspnet_edu_center.Controllers.Admin
 {
+    [Authorize(Roles = "1")]
     public class AdminController : Controller
     {
         private ApplicationContext _context;
@@ -17,7 +18,8 @@ namespace aspnet_edu_center.Controllers.Admin
         {
             _context = context;
         }
-        [Authorize(Roles = "1")]
+        
+        //Groups-------------------------------------------------------------------------
         public IActionResult Index()
         {
             return View();
@@ -102,7 +104,7 @@ namespace aspnet_edu_center.Controllers.Admin
             return RedirectToAction("ViewUsers");
         }
 
-        //-------------------------------------------------------------------------
+        //Groups-------------------------------------------------------------------------
 
         public IActionResult ViewGroups()
         {
@@ -186,7 +188,80 @@ namespace aspnet_edu_center.Controllers.Admin
             return RedirectToAction("ViewGroups");
         }
 
-        //-------------------------------------------------------------------------
+        public IActionResult ViewGroup_Users(int id)
+        {
+            //DbSet<User> users = _context.Users.Where(u => u.Id == model.Id);
+            ViewBag.id = id;
+            var users = _context.Users.
+                Join(_context.Group_Users,
+                a => a.Id,
+                b => b.User_Id,
+                (a, b) => new
+                    {
+                        Id = a.Id,
+                        Name = a.Name,
+                        Email = a.Email,
+                        Tel_num = a.Tel_num,
+                        Group_Id = b.Group_Id
+                    }
+                )
+                .Where(a=>a.Group_Id==id).ToList();
+            List<Dictionary<string, object>> usersList = new List<Dictionary<string, object>>();
+            foreach (var user in users)
+            {
+                usersList.Add(new Dictionary<string, object>() {
+                    { "Id", user.Id },
+                    { "Name", user.Name },
+                    { "Email", user.Email }, 
+                    { "Tel_num", user.Tel_num }, 
+                    { "Group_Id", user.Group_Id } 
+                });
+            }
+                //Where(a => a.Group_Id=id);
+            return View(usersList);
+        }
+        public IActionResult AddUser(int id, int group_id)
+        {
+            if (group_id != 0)
+            {
+                _context.Group_Users.Add(new Group_User { Group_Id = group_id, User_Id = id });
+                _context.SaveChanges();
+                return RedirectToAction("ViewGroup_Users", new { id = group_id });
+            }
+            ViewBag.Id = id;
+            var users = from Users in _context.Users
+                        join Group_Users in _context.Group_Users on Users.Id equals Group_Users.User_Id into ps
+                        from Group_Users in ps.DefaultIfEmpty()
+                        where Group_Users.Group_Id == null
+                        select new
+                        {
+                            Id = Users.Id,
+                            Name = Users.Name,
+                            Email = Users.Email,
+                            Tel_num = Users.Tel_num,
+                            User_Id = Group_Users.User_Id,
+                        };
+            List<Dictionary<string, object>> usersList = new List<Dictionary<string, object>>();
+            foreach (var user in users)
+            {
+                usersList.Add(new Dictionary<string, object>() {
+                    { "Id", user.Id },
+                    { "Name", user.Name },
+                    { "Email", user.Email },
+                    { "Tel_num", user.Tel_num }
+                });
+            }
+            return View(usersList);
+        }
+
+        public IActionResult DeleteGroup_User(int id, int group_id)
+        {
+            _context.Group_Users.Remove(_context.Group_Users.FirstOrDefault(u => u.User_Id == id));
+            _context.SaveChanges();
+            return RedirectToAction("ViewGroup_Users", new { id = group_id });
+        }
+
+        //Group_types-------------------------------------------------------------------------
 
         public IActionResult ViewGroup_types()
         {
@@ -262,6 +337,6 @@ namespace aspnet_edu_center.Controllers.Admin
             return RedirectToAction("ViewGroup_types");
         }
 
-
+        
     }
 }

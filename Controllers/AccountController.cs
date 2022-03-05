@@ -7,6 +7,7 @@ using aspnet_edu_center.ViewModels;     // пространство имен м�
 using aspnet_edu_center.Models;         // пространство имен UserContext и класса User
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNet.Identity;
 
 
 namespace aspnet_edu_center.Controllers
@@ -16,6 +17,8 @@ namespace aspnet_edu_center.Controllers
     {
         public class AccountController : Controller
         {
+
+            public const string DefaultIdClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
             private ApplicationContext _context;
             public AccountController(ApplicationContext context)
             {
@@ -82,12 +85,14 @@ namespace aspnet_edu_center.Controllers
                 // создаем один claim
                 var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Id.ToString()),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role_id.ToString())
             };
+
                 // создаем объект ClaimsIdentity
                 ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
                     ClaimsIdentity.DefaultRoleClaimType);
+
                 // установка аутентификационных куки
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
             }

@@ -1,0 +1,65 @@
+﻿@model List<Dictionary<string, object>>
+
+@{
+    ViewData["Title"] = "ViewGroup_Users";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ViewGroup_Users</title>
+</head>
+<body>
+<p>
+    <a asp-action="AddUser" asp-route-id="@ViewBag.id">Add User</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                id
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Tel_num
+            </th>
+            <th>
+                Group_Id
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item["Id"]
+            </td>
+            <td>
+                @item["Name"]
+            </td>
+            <td>
+                @item["Email"]
+            </td>
+            <td>
+                @item["Tel_num"]
+            </td>
+            <td>
+                @item["Group_Id"]
+            </td>
+            <td>
+                <a asp-action="DeleteGroup_User" asp-route-id=@item["Id"] asp-route-group_id=@ViewBag.id>Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>
