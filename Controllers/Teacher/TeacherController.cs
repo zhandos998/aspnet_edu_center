@@ -145,28 +145,19 @@ namespace aspnet_edu_center.Controllers.Teacher
             }
             return View(usersList);
         }
-        public IActionResult DetailsUser(int id)
+        public IActionResult DetailsUser(int id,int group_id)
         {
-            ViewBag.Group_id = id;
-            var users = _context.Groups.
+            ViewBag.Group_id = group_id;
+            ViewBag.User_Name = _context.Users.First().Name;
+            var users = _context.Users.
             Where(a => a.Id == id).
-            Join(_context.Group_Users,
+            Join(_context.Grades,
             a => a.Id,
-            b => b.Group_Id,
+            b => b.User_id,
             (a, b) => new
             {
-                User_Id = b.User_Id
-            }
-            ).
-            Join(_context.Users,
-            a => a.User_Id,
-            b => b.Id,
-            (b, a) => new
-            {
-                Id = a.Id,
-                Name = a.Name,
-                Email = a.Email,
-                Tel_num = a.Tel_num
+                Grades = b.Grades,
+                Date = b.Date,
             }
             )
             .ToList();
@@ -175,13 +166,19 @@ namespace aspnet_edu_center.Controllers.Teacher
             foreach (var user in users)
             {
                 usersList.Add(new Dictionary<string, object>() {
-                    { "Id", user.Id },
-                    { "Name", user.Name },
-                    { "Email", user.Email },
-                    { "Tel_num", user.Tel_num }
+                    { "Grades", user.Grades },
+                    { "Date", user.Date }
                 });
             }
             return View(usersList);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateGrade(int id,int grade) {
+            Grade Grade = new Grade { Grades = grade};
+
+            _context.Grades.Add(Grade);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("DetailsGroup", new { id = id });
         }
     }
 }

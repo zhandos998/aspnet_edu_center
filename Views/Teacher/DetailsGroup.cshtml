@@ -33,7 +33,7 @@
             {
                 <tr>
                     <td>
-                        <a asp-action="DetailsUser" asp-route-id=@item["Id"]>@item["Name"]</a>
+                        <a asp-action="DetailsUser" asp-route-id=@item["Id"] asp-route-group_id=@ViewBag.Group_id>@item["Name"]</a>
 </td>
                     <td>
                         @item["Email"]

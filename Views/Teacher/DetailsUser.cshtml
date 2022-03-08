@@ -1,0 +1,67 @@
+﻿@model List<Dictionary<string, object>>
+
+@{
+    ViewData["Title"] = "DetailsUser";
+}
+
+<h1>@ViewBag.User_Name</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Grades
+            </th>
+            <th>
+                Date
+            </th>
+            @*<th>
+                    Tel_num
+                </th>
+                <th>
+                    Attendance
+                </th>*@
+            @*<th></th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item["Grades"]
+                </td>
+                <td>
+                    @item["Date"]
+                </td>
+            </tr>
+        }
+        <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+
+<h1>Поставить балл</h1>
+
+@*<form asp-action="DetailsUser">*@
+<form asp-action="CreateGrade" asp-controller="Teacher" asp-route-id="@ViewBag.Group_id" asp-anti-forgery="true">
+    <input name="grade" type="number" />
+    <input type="submit" />
+</form>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $('#checkbox').change(function () {
+            alert($(this).is(":checked"));
+        });
+    </script>
