@@ -107,8 +107,81 @@ namespace aspnet_edu_center.Controllers.Teacher
             return View(usersList);
         }
 
+        public IActionResult DetailsGroup(int id)
+        {
+            ViewBag.Group_id = id;
+            var users = _context.Groups.
+            Where(a => a.Id == id).
+            Join(_context.Group_Users,
+            a => a.Id,
+            b => b.Group_Id,
+            (a, b) => new
+            {
+                User_Id = b.User_Id
+            }
+            ).
+            Join(_context.Users,
+            a => a.User_Id,
+            b => b.Id,
+            (b, a) => new
+            {
+                Id = a.Id,
+                Name = a.Name,
+                Email = a.Email,
+                Tel_num = a.Tel_num
+            }
+            )
+            .ToList();
+            List<Dictionary<string, object>> usersList = new List<Dictionary<string, object>>();
 
+            foreach (var user in users)
+            {
+                usersList.Add(new Dictionary<string, object>() {
+                    { "Id", user.Id },
+                    { "Name", user.Name },
+                    { "Email", user.Email },
+                    { "Tel_num", user.Tel_num }
+                });
+            }
+            return View(usersList);
+        }
+        public IActionResult DetailsUser(int id)
+        {
+            ViewBag.Group_id = id;
+            var users = _context.Groups.
+            Where(a => a.Id == id).
+            Join(_context.Group_Users,
+            a => a.Id,
+            b => b.Group_Id,
+            (a, b) => new
+            {
+                User_Id = b.User_Id
+            }
+            ).
+            Join(_context.Users,
+            a => a.User_Id,
+            b => b.Id,
+            (b, a) => new
+            {
+                Id = a.Id,
+                Name = a.Name,
+                Email = a.Email,
+                Tel_num = a.Tel_num
+            }
+            )
+            .ToList();
+            List<Dictionary<string, object>> usersList = new List<Dictionary<string, object>>();
 
-
+            foreach (var user in users)
+            {
+                usersList.Add(new Dictionary<string, object>() {
+                    { "Id", user.Id },
+                    { "Name", user.Name },
+                    { "Email", user.Email },
+                    { "Tel_num", user.Tel_num }
+                });
+            }
+            return View(usersList);
+        }
     }
 }

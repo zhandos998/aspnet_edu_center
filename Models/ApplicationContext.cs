@@ -11,6 +11,7 @@ namespace aspnet_edu_center.Models
         public DbSet<Group_type> Group_types { get; set; }
         public DbSet<Group_User> Group_Users { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
+        public DbSet<Grade> Grades { get; set; }
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
@@ -35,6 +36,7 @@ namespace aspnet_edu_center.Models
             modelBuilder.Entity<User>().HasData(new User[] { adminUser });
             modelBuilder.Entity<Group_User>().HasKey(c => new { c.User_Id, c.Group_Id });
             modelBuilder.Entity<Attendance>().HasKey(c => new { c.User_id, c.Date });
+            modelBuilder.Entity<Grade>().HasKey(c => new { c.User_id, c.Date });
             base.OnModelCreating(modelBuilder);
         }
     }

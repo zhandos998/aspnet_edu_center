@@ -1,0 +1,65 @@
+﻿@model List<Dictionary<string, object>>
+
+@{
+    ViewData["Title"] = "DetailsGroup";
+}
+
+<h1>DetailsGroup</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Tel_num
+                </th>
+                <th>
+                    Attendance
+                </th>
+                @*<th></th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="DetailsUser" asp-route-id=@item["Id"]>@item["Name"]</a>
+</td>
+                    <td>
+                        @item["Email"]
+                    </td>
+                    <td>
+                        @item["Tel_num"]
+                    </td>
+                    <td>
+                        <input id="checkbox" type="checkbox" name="attendance[]" />
+                    </td>
+                    <td>
+                        @*<a asp-action="Edit" asp-route-id=@item["Id"]>Edit</a> |
+                            <a asp-action="Details" asp-route-id=@item["Id"]>Details</a> |
+                            <a asp-action="Delete" asp-route-id=@item["Id"]>Delete</a>*@
+
+                        @*<input id="grade_id" type="number" name="grades[]" />*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $('#checkbox').change(function() {
+           alert($(this).is(":checked"));
+        });
+    </script>
