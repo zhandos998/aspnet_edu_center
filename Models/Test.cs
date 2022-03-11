@@ -10,14 +10,11 @@ namespace aspnet_edu_center.Models
 {
     public class Tests
     {
+        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Tel_num { get; set; }
-
-        [ForeignKey("Role")]
-        public int Role_id { get; set; }
+        [ForeignKey("Group")]
+        public int Group_id { get; set; }
     }
 }
 

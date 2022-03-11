@@ -6,10 +6,6 @@
 
 <h1>@ViewBag.User_Name</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-
 <table class="table">
     <thead>
         <tr>
@@ -53,7 +49,7 @@
 <h1>Поставить балл</h1>
 
 @*<form asp-action="DetailsUser">*@
-<form asp-action="CreateGrade" asp-controller="Teacher" asp-route-id="@ViewBag.Group_id" asp-anti-forgery="true">
+<form asp-action="CreateGrade" asp-controller="Teacher" asp-route-id="@ViewBag.Group_id" asp-route-user_id="@ViewBag.User_id" asp-anti-forgery="true">
     <input name="grade" type="number" />
     <input type="submit" />
 </form>

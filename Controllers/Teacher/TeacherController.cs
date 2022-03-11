@@ -83,10 +83,24 @@ namespace aspnet_edu_center.Controllers.Teacher
             return View(usersList);
         }
 
-        public IActionResult ViewAttendance(int id)
+        [HttpPost]
+        public async Task<IActionResult> AttendanceStudent(int id)
         {
-            DbSet<Attendance> attendanceSet = _context.Attendances;
-            return View(attendanceSet);
+            Attendance attendance = _context.Attendances.FirstOrDefault(u => u.User_id == id && u.Date == DateTime.Now.Date);
+            if (attendance == null)
+            {
+                attendance = new Attendance { User_id = id, Date = DateTime.Now.Date, Camed = true };
+                _context.Attendances.Add(attendance);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                attendance.Camed = !attendance.Camed;
+                _context.Entry(attendance).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+            Console.WriteLine("Success");
+            return Ok();
         }
         public IActionResult ViewGroups()
         {
@@ -110,28 +124,20 @@ namespace aspnet_edu_center.Controllers.Teacher
         public IActionResult DetailsGroup(int id)
         {
             ViewBag.Group_id = id;
-            var users = _context.Groups.
-            Where(a => a.Id == id).
-            Join(_context.Group_Users,
-            a => a.Id,
-            b => b.Group_Id,
-            (a, b) => new
-            {
-                User_Id = b.User_Id
-            }
-            ).
-            Join(_context.Users,
-            a => a.User_Id,
-            b => b.Id,
-            (b, a) => new
-            {
-                Id = a.Id,
-                Name = a.Name,
-                Email = a.Email,
-                Tel_num = a.Tel_num
-            }
-            )
-            .ToList();
+            var users = (from Groups in _context.Groups
+                         join Group_Users in _context.Group_Users on Groups.Id equals Group_Users.Group_Id
+                         join Users in _context.Users on Group_Users.User_Id equals Users.Id
+                         join Attendances in _context.Attendances on Users.Id equals Attendances.User_id into ps
+                         from Attendances in ps.DefaultIfEmpty()
+                         where Groups.Id == id
+                         select new
+                         {
+                             Id = Users.Id,
+                             Name = Users.Name,
+                             Email = Users.Email,
+                             Tel_num = Users.Tel_num,
+                             Camed = Attendances.Camed,
+                         }).ToList();
             List<Dictionary<string, object>> usersList = new List<Dictionary<string, object>>();
 
             foreach (var user in users)
@@ -140,7 +146,8 @@ namespace aspnet_edu_center.Controllers.Teacher
                     { "Id", user.Id },
                     { "Name", user.Name },
                     { "Email", user.Email },
-                    { "Tel_num", user.Tel_num }
+                    { "Tel_num", user.Tel_num },
+                    { "Camed", user.Camed }
                 });
             }
             return View(usersList);
@@ -149,6 +156,7 @@ namespace aspnet_edu_center.Controllers.Teacher
         {
             ViewBag.Group_id = group_id;
             ViewBag.User_Name = _context.Users.First().Name;
+            ViewBag.User_id = id;
             var users = _context.Users.
             Where(a => a.Id == id).
             Join(_context.Grades,
@@ -173,12 +181,20 @@ namespace aspnet_edu_center.Controllers.Teacher
             return View(usersList);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateGrade(int id,int grade) {
-            Grade Grade = new Grade { Grades = grade};
+        public async Task<IActionResult> CreateGrade(int id,int grade,int user_id) {
+            Grade Grade = new Grade {User_id=user_id, Grades = grade,Date=DateTime.Now};
 
             _context.Grades.Add(Grade);
             await _context.SaveChangesAsync();
             return RedirectToAction("DetailsGroup", new { id = id });
         }
+
+        public IActionResult CreateTest()
+        {
+            return View();
+        }
+        
+
+
     }
 }

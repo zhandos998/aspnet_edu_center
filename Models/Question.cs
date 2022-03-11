@@ -8,12 +8,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace aspnet_edu_center.Models
 {
-    public class Attendance
+    public class Question
     {
-        [ForeignKey("User")]
-        public int User_id { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime Date { get; set; }
-        public bool Camed { get; set; }
+        [Key]
+        public int Id { get; set; }
+        public int Test_id { get; set; }
+        public string Question_title { get; set; }
     }
 }
+

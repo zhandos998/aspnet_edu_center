@@ -5,61 +5,75 @@
 }
 
 <h1>DetailsGroup</h1>
-
+    
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="CreateTest">Create Test</a>
 </p>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Email
-                </th>
-                <th>
-                    Tel_num
-                </th>
-                <th>
-                    Attendance
-                </th>
-                @*<th></th>*@
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    @*<form asp-action="AttendanceStudent" asp-controller="Teacher" asp-anti-forgery="true">*@
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        <a asp-action="DetailsUser" asp-route-id=@item["Id"] asp-route-group_id=@ViewBag.Group_id>@item["Name"]</a>
-</td>
-                    <td>
-                        @item["Email"]
-                    </td>
-                    <td>
-                        @item["Tel_num"]
-                    </td>
-                    <td>
-                        <input id="checkbox" type="checkbox" name="attendance[]" />
-                    </td>
-                    <td>
-                        @*<a asp-action="Edit" asp-route-id=@item["Id"]>Edit</a> |
-                            <a asp-action="Details" asp-route-id=@item["Id"]>Details</a> |
-                            <a asp-action="Delete" asp-route-id=@item["Id"]>Delete</a>*@
-
-                        @*<input id="grade_id" type="number" name="grades[]" />*@
-                    </td>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Tel_num
+                    </th>
+                    <th>
+                        Attendance
+                    </th>
+                    @*<th></th>*@
                 </tr>
-            }
-        </tbody>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <a asp-action="DetailsUser" asp-route-id=@item["Id"] asp-route-group_id=@ViewBag.Group_id>@item["Name"]</a>
+                        </td>
+                        <td>
+                            @item["Email"]
+                        </td>
+                        <td>
+                            @item["Tel_num"]
+                        </td>
+                        <td>
+   @*                         <input class="checkbox" type="checkbox" name="attendance[]"/>
+                            <input class="d-none" name="id[]" value=@item["Id"]/>*@
+                        @if ((bool)item["Camed"])
+                        {
+                            <input class="checkbox" type="checkbox" data-id=@item["Id"] checked/>
+                        }
+                        else
+                        {
+                            <input class="checkbox" type="checkbox" data-id=@item["Id"]/>
+                        }
 
-    </table>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @*<input type="submit" />*@
+    @*</form>*@
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        $('#checkbox').change(function() {
-           alert($(this).is(":checked"));
+        $('.checkbox').change(function() {
+            $(this).is(":checked");
+           //alert($(this).is(":checked"));
+           //alert("/Teacher/AttendanceStudent/");
+           $.ajax({
+                type: "POST",
+                url: "/Teacher/AttendanceStudent/"+ $(this).data('id')  
+                //success: successFunc,
+                //error: errorFunc
+            });
+            function errorFunc(data) {
+                alert('error');
+            }
         });
     </script>

@@ -13,6 +13,7 @@ namespace aspnet_edu_center.Models
         [ForeignKey("User")]
         public int User_id { get; set; }
         public int Grades { get; set; }
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
     }
 }
