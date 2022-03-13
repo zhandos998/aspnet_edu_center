@@ -40,6 +40,7 @@ namespace aspnet_edu_center.Models
             modelBuilder.Entity<Group_User>().HasKey(c => new { c.User_Id, c.Group_Id });
             modelBuilder.Entity<Grade>().HasKey(c => new { c.User_id, c.Date });
             modelBuilder.Entity<Attendance>().HasKey(c => new { c.User_id, c.Date });
+            modelBuilder.Entity<Answer>().HasNoKey();
             base.OnModelCreating(modelBuilder);
         }
     }
