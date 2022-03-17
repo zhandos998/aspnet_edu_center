@@ -8,12 +8,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace aspnet_edu_center.Models
 {
-    public class Answer
+    public class Document
     {
-        [Key]
         public int Id { get; set; }
-        public int Question_id { get; set; }
-        public string Answer_text { get; set; }
+        public int Group_id { get; set; }
+        public string Name { get; set; }
+        public string Url { get; set; }
+        public string Doc_name { get; set; }
     }
 }
 

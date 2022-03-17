@@ -32,7 +32,7 @@ namespace aspnet_edu_center.Controllers
             {
                 return RedirectToAction("Index", "Teacher");
             }
-            return View();
+            return RedirectToAction("Index", "Student");
         }
 
         public IActionResult Privacy()

@@ -1,0 +1,74 @@
+﻿@*@model List<Dictionary<string, object>>*@
+
+@{
+    ViewData["Title"] = "DetailsUser";
+}
+
+<h1>@ViewBag.tests[0].Name</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form">
+
+            <div id="questions">
+            @{var i=0;}
+            @foreach (var item in ViewBag.questions)
+            {
+                var j=0;
+                i+=1;
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">@i</span>
+                    </div>
+                    <input class="form-control" value="@item.Question_title " readonly>
+                </div>
+                @foreach (var item1 in ViewBag.answers)
+                {
+                    @if (item1.Question_id == item.Id){
+                        j+=1;
+                        <div id="quest_1" class="ml-5">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">@j</span>
+                                </div>
+                                <input class="form-control" value="@item1.Answer_text" readonly>
+                            </div>
+                        </div>
+                    }
+                }
+           }
+        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8MUTGml_VKVMuZC6szM-U3qdNWqTX_D-hCM6Wbb0bCYIi9nVBImhMDtRo-kaEnvJikf0ux6IpHb9m_0ZyftdeYxnkiLW2D4qi2ezLSz_mtPbp8SblBQe7jH9mZTm1qbfMnx2BSWmWfUx2I2gUJLe18a4FE_4IN2mw1MeBEwfRPAtNlgbV-s-5ssxMgLrgLYLvg">
+        </div>
+    </div>
+</div>
+
+<script>
+    var d = {};
+    var qi = 0;
+    function add_question() {
+        qi += 1;
+        var el = document.getElementById("questions");
+        var text = '<div class="input-group mb-3">'+
+                      '<div class="input-group-prepend">'+
+                        '<span class="input-group-text">' + qi + '</span>'+
+                      '</div>'+
+                      '<input class="form-control" name="quest['+qi+']">'+
+                      '<div class="input-group-append">'+
+                        '<span class="input-group-text"><a href="#" onclick="add_answer(' + qi + ')">add answer</a></span>'+
+                      '</div>'+
+                    '</div>'+
+                    '<div id="quest_'+qi+'" class="ml-3"></div>';
+        el.innerHTML += text;
+        d[qi]=0;
+    }
+    function add_answer(qi) {
+        var el = document.getElementById("quest_"+qi);
+        var text = '<div class="input-group mb-3">'+
+                        '<div class="input-group-prepend">'+
+                            '<span class="input-group-text">' + (++d[qi]) + '</span>'+
+                        '</div>'+
+                        '<input class="form-control" name="answer['+qi+'][]">'+
+                    '</div>';
+        el.innerHTML += text;
+    }
+</script>

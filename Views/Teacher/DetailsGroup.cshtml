@@ -1,16 +1,16 @@
 ﻿@model List<Dictionary<string, object>>
 
-@{
-    ViewData["Title"] = "DetailsGroup";
-}
+<h1>@ViewData["Title"]</h1>
 
-<h1>DetailsGroup</h1>
+    <a asp-action="ViewTests" asp-route-id=@ViewBag.Group_id class="btn btn-primary">Tests</a>
+
+    <a asp-action="ViewDocuments" asp-route-id=@ViewBag.Group_id class="btn btn-primary">Documents</a>
+
+
+
     
-<p>
-    <a asp-action="CreateTest">Create Test</a>
-</p>
     @*<form asp-action="AttendanceStudent" asp-controller="Teacher" asp-anti-forgery="true">*@
-        <table class="table">
+        <table class="table mt-3">
             <thead>
                 <tr>
                     <th>
@@ -42,8 +42,6 @@
                             @item["Tel_num"]
                         </td>
                         <td>
-   @*                         <input class="checkbox" type="checkbox" name="attendance[]"/>
-                            <input class="d-none" name="id[]" value=@item["Id"]/>*@
                         @if ((bool)item["Camed"])
                         {
                             <input class="checkbox" type="checkbox" data-id=@item["Id"] checked/>
@@ -64,13 +62,9 @@
     <script>
         $('.checkbox').change(function() {
             $(this).is(":checked");
-           //alert($(this).is(":checked"));
-           //alert("/Teacher/AttendanceStudent/");
            $.ajax({
                 type: "POST",
-                url: "/Teacher/AttendanceStudent/"+ $(this).data('id')  
-                //success: successFunc,
-                //error: errorFunc
+                url: "/Teacher/AttendanceStudent/"+ $(this).data('id')
             });
             function errorFunc(data) {
                 alert('error');

@@ -9,19 +9,21 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateTest">
+        <form asp-action="CreateTest" asp-route-id=@ViewBag.Group_id>
             <div class="form-group">
-                <label class="control-label"></label>
-                <input class="form-control" />
+                <label class="control-label">Test name</label>
+                <input class="form-control" name="name"/>
             </div>
             <div id="questions">
 
             </div>
-            <a href="#" onclick="add_question()">Add question</a>
+
+            <a href="#" class="btn btn-secondary mb-3" onclick="add_question()">Add question</a>
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
+
         </form>
     </div>
 </div>
@@ -31,16 +33,36 @@
 </div>
 
 <script>
+    var d = {};
     var qi = 0;
     function add_question() {
         qi += 1;
         var el = document.getElementById("questions");
-        var text = "<div id='quest_" + qi + "'>" + qi + ")<input/><a href='#' onclick='add_answer(" + qi + ")'>add answer</a></div>";
+        var text = 
+                      '<label class="control-label">Question</label>'+
+                      '<div class="input-group mb-3">'+
+                          '<div class="input-group-prepend">'+
+                            '<span class="input-group-text">' + qi + '</span>'+
+                          '</div>'+
+                          '<input class="form-control" name="quest['+qi+']">'+
+                          '<div class="input-group-append">'+
+                            '<span class="input-group-text"><a href="#" onclick="add_answer(' + qi + ')">add answer</a></span>'+
+                          '</div>'+
+                        '</div>'+
+                        '<div id="quest_'+qi+'" class="ml-3"></div>';
         el.innerHTML += text;
+        d[qi]=0;
     }
     function add_answer(qi) {
         var el = document.getElementById("quest_"+qi);
-        var text = "<div><input/></div>";
+        var text = 
+                      '<label class="control-label">Answer</label>'+
+                        '<div class="input-group mb-3">'+
+                        '<div class="input-group-prepend">'+
+                            '<span class="input-group-text">' + (++d[qi]) + '</span>'+
+                        '</div>'+
+                        '<input class="form-control" name="answer['+qi+'][]">'+
+                    '</div>';
         el.innerHTML += text;
     }
 </script>
