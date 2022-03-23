@@ -57,19 +57,6 @@ namespace aspnet_edu_center.Controllers.Teacher
                 Supervisor_id = b.Supervisor_id
             }
             ).
-            //Join(_context.Group_types,
-            //a => a.Group_type,
-            //b => b.Id,
-            //(a, b) => new
-            //{
-            //    Id = a.Id,
-            //    Name = a.Name,
-            //    Email = a.Email,
-            //    Tel_num = a.Tel_num,
-            //    Group_type = b.Name,
-            //    Supervisor_id = a.Supervisor_id
-            //}
-            //).
             Where(a => a.Supervisor_id == int.Parse(User.Identity.Name)).ToList();
             List<Dictionary<string, object>> usersList = new List<Dictionary<string, object>>();
 
@@ -104,7 +91,6 @@ namespace aspnet_edu_center.Controllers.Teacher
                 _context.Entry(attendance).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
-            Console.WriteLine("Success");
             return Ok();
         }
         public IActionResult ViewGroups()
@@ -133,9 +119,10 @@ namespace aspnet_edu_center.Controllers.Teacher
             var users = (from Groups in _context.Groups
                          join Group_Users in _context.Group_Users on Groups.Id equals Group_Users.Group_Id
                          join Users in _context.Users on Group_Users.User_Id equals Users.Id
-                         join Attendances in _context.Attendances on Users.Id equals Attendances.User_id into ps
+                         join Attendances in _context.Attendances on Users.Id equals Attendances.User_id
+                         into ps
                          from Attendances in ps.DefaultIfEmpty()
-                         where Groups.Id == id
+                         where Groups.Id == id && Attendances.Date == DateTime.Now.Date
                          select new
                          {
                              Id = Users.Id,
@@ -161,7 +148,7 @@ namespace aspnet_edu_center.Controllers.Teacher
         public IActionResult DetailsUser(int id,int group_id)
         {
             ViewBag.Group_id = group_id;
-            ViewBag.User_Name = _context.Users.First().Name;
+            ViewBag.User_Name = _context.Users.First(d=>d.Id == id).Name;
             ViewBag.User_id = id;
             var users = _context.Users.
             Where(a => a.Id == id).
@@ -184,6 +171,28 @@ namespace aspnet_edu_center.Controllers.Teacher
                     { "Date", user.Date }
                 });
             }
+            var attens = _context.Users.
+                Where(a=>a.Id == id).
+                Join(_context.Attendances,
+                a => a.Id,
+                b => b.User_id,
+                (a, b) => new
+                {
+                    Date = b.Date,
+                    Camed = b.Camed
+                }).ToList();
+
+
+            List<Dictionary<string, object>> obj = new List<Dictionary<string, object>>();
+
+            foreach (var atten in attens)
+            {
+                obj.Add(new Dictionary<string, object>() {
+                    { "Date", atten.Date },
+                    { "Camed", atten.Camed }
+                });
+            }
+            ViewBag.Attendances = obj;
             return View(usersList);
         }
         [HttpPost]
@@ -212,7 +221,9 @@ namespace aspnet_edu_center.Controllers.Teacher
             {
                 Console.WriteLine(ex);
             }
+
             Tests test = new Tests {Id = max_id, Group_id = id, Name = name };
+            Console.WriteLine(max_id+" "+id+" "+name);
             _context.Tests.Add(test);
             await _context.SaveChangesAsync();
             foreach (KeyValuePair<int, string> value in quest)
@@ -227,23 +238,24 @@ namespace aspnet_edu_center.Controllers.Teacher
                     Console.WriteLine(ex);
                 }
                 Question question = new Question {Id = max_id2, Test_id = max_id, Question_title = value.Value };
+                Console.WriteLine(max_id2 + " " + max_id + " " + value.Value);
+
                 _context.Questions.Add(question);
                 await _context.SaveChangesAsync();
-                Console.WriteLine(value.Key);
                 foreach (KeyValuePair<int, List<string>> value2 in answer)
                 {
-                    Console.WriteLine("value2 " + value2.Key);
                     if (value2.Key == value.Key)
                         foreach (string value3 in value2.Value)
                         {
                             Answer answer1 = new Answer { Question_id = max_id2, Answer_text = value3 };
+                            Console.WriteLine(max_id2 + " " + value3);
                             _context.Answers.Add(answer1);
                             await _context.SaveChangesAsync();
                             Console.WriteLine("value3 value " + value3);
                         }
                 }
             }
-            return RedirectToAction("DetailsGroup",new { id = id});
+            return RedirectToAction("ViewTests", new { id = id});
         }
 
         public IActionResult ViewTests(int id)
@@ -266,25 +278,19 @@ namespace aspnet_edu_center.Controllers.Teacher
             Tests users = _context.Tests.Find(id);
             Console.WriteLine(users.Id);
             _context.Tests.Remove(users);
-            //_context.SaveChanges();
             var q = _context.Questions.Where(x => x.Test_id == id);
             foreach (var question in q)
             {
-
-                Console.WriteLine(question.Id);
                 var a = _context.Answers.Where(x => x.Question_id == question.Id);
-
                 foreach (var answer in a)
                 {
                     Console.WriteLine(answer.Id);
                     _context.Answers.Remove(answer);
-                    //_context.SaveChanges();
                 }
                 _context.Questions.Remove(question);
-                //_context.SaveChanges();
             }
             await _context.SaveChangesAsync();
-            return RedirectToAction("ViewTests");
+            return RedirectToAction("ViewTests",new { id = group_id});
         }
 
         public IActionResult DetailsTest(int id)

@@ -15,13 +15,6 @@
             <th>
                 Date
             </th>
-            @*<th>
-                    Tel_num
-                </th>
-                <th>
-                    Attendance
-                </th>*@
-            @*<th></th>*@
         </tr>
     </thead>
     <tbody>
@@ -42,6 +35,42 @@
             <td>
             </td>
         </tr>
+    </tbody>
+
+</table>
+
+<h3>Attendances</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Camed
+            </th>
+            <th>
+                Date
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.Attendances)
+        {
+            <tr>
+                <td>
+                    @if (item["Camed"])
+                    {
+                        <p>Yes</p>
+                    }
+                    else
+                    {
+                        <p>No</p>
+                    }
+                </td>
+                <td>
+                    @item["Date"]
+                </td>
+            </tr>
+        }
     </tbody>
 
 </table>

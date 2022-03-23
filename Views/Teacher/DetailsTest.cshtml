@@ -41,34 +41,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    var d = {};
-    var qi = 0;
-    function add_question() {
-        qi += 1;
-        var el = document.getElementById("questions");
-        var text = '<div class="input-group mb-3">'+
-                      '<div class="input-group-prepend">'+
-                        '<span class="input-group-text">' + qi + '</span>'+
-                      '</div>'+
-                      '<input class="form-control" name="quest['+qi+']">'+
-                      '<div class="input-group-append">'+
-                        '<span class="input-group-text"><a href="#" onclick="add_answer(' + qi + ')">add answer</a></span>'+
-                      '</div>'+
-                    '</div>'+
-                    '<div id="quest_'+qi+'" class="ml-3"></div>';
-        el.innerHTML += text;
-        d[qi]=0;
-    }
-    function add_answer(qi) {
-        var el = document.getElementById("quest_"+qi);
-        var text = '<div class="input-group mb-3">'+
-                        '<div class="input-group-prepend">'+
-                            '<span class="input-group-text">' + (++d[qi]) + '</span>'+
-                        '</div>'+
-                        '<input class="form-control" name="answer['+qi+'][]">'+
-                    '</div>';
-        el.innerHTML += text;
-    }
-</script>

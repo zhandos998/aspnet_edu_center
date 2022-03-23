@@ -1,0 +1,33 @@
+#EXTM3U
+#EXTINF:-1,Balapan
+http://vs1.cdn.ott.otautv.kz/dtv/id3_KTR_SG—Balapan/03/plst.m3u8
+#EXTINF:0,Hittv
+http://vs2.cdn.ott.otautv.kz/dtv/id13_KTR_SG—Hittv/03/plst.m3u8
+#EXTINF:0,31kanal
+http://vs1.cdn.ott.otautv.kz/dtv/id8_KTR_SG—31kanal/03/plst.m3u8
+#EXTINF:0,Bilim
+http://vs2.cdn.ott.otautv.kz/dtv/id5_KTR_SG—Bilim/03/plst.m3u8
+#EXTINF:0,Tan
+http://vs2.cdn.ott.otautv.kz/dtv/id9_KTR_SG—Tan/03/plst.m3u8
+#EXTINF:0,KTK
+http://195.49.213.56/ktklive/live.hq/playlist.m3u8
+#EXTINF:0, МИР
+http://vs1.cdn.ott.otautv.kz/dtv/id1_KTR_SG—Mir/03/plst.m3u8
+#EXTINF:-1,Kazakhstan
+http://vs1.cdn.ott.otautv.kz/dtv/id29_KTR_SG—Kazakhstan/03/plst.m3u8
+#EXTINF:-1,KazSport
+https://qazsporttv-stream.daitsuna.net/qazsporttv/qazsporttv_234/index.m3u8
+#EXTINF:0,Muzzone
+http://vs2.cdn.ott.otautv.kz/dtv/id27_KTR_SG—Muzzone/03/plst.m3u8
+#EXTINF:0, Новое тв
+http://novoetv.cdnvideo.ru/novoetv/novoetv.sdp/playlist.m3u8
+#EXTINF:-1,Kazakhtv
+http://vs1.cdn.ott.otautv.kz/dtv/id4_KTR_SG—Kazakhtv/03/plst.m3u8
+#EXTINF:0,SEVEN
+http://vs2.cdn.ott.otautv.kz/dtv/id20_KTR_SG—7Kazakhstan/03/plst.m3u8
+#EXTINF:0,Zhetysu
+http://vs2.cdn.ott.otautv.kz/dtv/id11_KTR_SG—Zhetysu/03/plst.m3u8
+#EXTINF:0,Almaty
+http://vs1.cdn.ott.otautv.kz/dtv/id10_KTR_SG—Almaty/03/plst.m3u8
+#EXTINF:0,24kz
+http://vs2.cdn.ott.otautv.kz/dtv/id6_KTR_SG—24kz/03/plst.m3u8
