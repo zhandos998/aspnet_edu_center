@@ -122,7 +122,7 @@ namespace aspnet_edu_center.Controllers.Teacher
                          join Attendances in _context.Attendances on Users.Id equals Attendances.User_id
                          into ps
                          from Attendances in ps.DefaultIfEmpty()
-                         where Groups.Id == id && Attendances.Date == DateTime.Now.Date
+                         where Groups.Id == id //&& Attendances.Date == DateTime.Now.Date
                          select new
                          {
                              Id = Users.Id,
@@ -130,11 +130,14 @@ namespace aspnet_edu_center.Controllers.Teacher
                              Email = Users.Email,
                              Tel_num = Users.Tel_num,
                              Camed = Attendances.Camed,
+                             Date = Attendances.Date,
                          }).ToList();
+
             List<Dictionary<string, object>> usersList = new List<Dictionary<string, object>>();
 
             foreach (var user in users)
             {
+                System.Console.WriteLine(user.Date);
                 usersList.Add(new Dictionary<string, object>() {
                     { "Id", user.Id },
                     { "Name", user.Name },
@@ -322,7 +325,7 @@ namespace aspnet_edu_center.Controllers.Teacher
                 {
                     await Url.CopyToAsync(fileStream);
                 }
-                Document file = new Document { Name = Name, Url = path ,Group_id = Group_id ,Doc_name = Url.FileName };
+                Document file = new Document { Name = Name, Url = path ,Group_id = Group_id, Doc_name = Url.FileName, created_at = DateTime.Now.Date };
                 _context.Documents.Add(file);
                 _context.SaveChanges();
             }
@@ -349,5 +352,50 @@ namespace aspnet_edu_center.Controllers.Teacher
             string file_name = _context.Documents.Find(id).Doc_name;
             return PhysicalFile(file_path, file_type, file_name);
         }
+        public IActionResult ViewTimeTable()
+        {
+            //ViewBag.Group_id = id;
+            var users = _context.Groups
+            .Where(a => a.Supervisor_id == int.Parse(User.Identity.Name))
+            .Join(_context.Timetables,
+            a => a.Id,
+            b => b.Group_id,
+            (a, b) => new
+            {
+                Id = a.Id,
+                Name = a.Name,
+                Week_day = b.Week_day,
+                Time = b.Time,
+            }
+            )
+            .OrderBy(a => a.Week_day)
+            .ToList();
+            List<Dictionary<string, object>> usersList = new List<Dictionary<string, object>>();
+
+            foreach (var user in users)
+            {
+                string week = "";
+                switch (user.Week_day)
+                {
+                    case 1: week = "Понедельник"; break;
+                    case 2: week = "Вторник"; break;
+                    case 3: week = "Среда"; break;
+                    case 4: week = "Четверг"; break;
+                    case 5: week = "Пятница"; break;
+                    case 6: week = "Суббота"; break;
+                    case 7: week = "Воскресенье"; break;
+                }
+                usersList.Add(new Dictionary<string, object>() {
+                    { "Id", user.Id },
+                    { "Name", user.Name },
+                    { "Week_day", week },
+                    { "Time", user.Time },
+                });
+            }
+            return View(usersList);
+        }
+
+        
+
     }
 }

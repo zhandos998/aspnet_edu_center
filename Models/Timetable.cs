@@ -9,11 +9,9 @@ namespace aspnet_edu_center.Models
     public class Timetable
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public int Group_type { get; set; }
-        public int Supervisor_id { get; set; }
-        public DateTime date_form { get; set; }
-        public DateTime date_to { get; set; }
+        public int Group_id { get; set; }
+        public int Week_day { get; set; }
+        public string Time { get; set; }
     }
 }
 

@@ -16,6 +16,8 @@ namespace aspnet_edu_center.Models
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Document> Documents { get; set; }
+        public DbSet<Timetable> Timetables { get; set; }
+        public DbSet<StudDocument> StudDocuments { get; set; }
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {

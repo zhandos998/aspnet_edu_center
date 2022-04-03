@@ -1,0 +1,42 @@
+﻿@model List<Dictionary<string, object>>
+
+@{
+    ViewData["Title"] = "TimeTableGroup";
+}
+
+<h1>@ViewBag.Group_Name</h1>
+<p>Timetable</p>
+
+<p>
+    <a asp-action="CreateTimeTableGroup" asp-route-id="@ViewBag.Group_id">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Week_day
+            </th>
+            <th>
+                Time
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item["Week_day"]
+                </td>
+                <td>
+                    @item["Time"]
+                </td>
+                <td>
+                    <a asp-action="EditTimeTableGroup" asp-route-id="@item["Id"]">Edit</a> |
+                    <a asp-action="DeleteTimeTableGroup" asp-route-id="@item["Id"]" asp-route-group_id="@ViewBag.Group_id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

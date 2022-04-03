@@ -1,0 +1,33 @@
+﻿@model List<Dictionary<string, object>>
+@{
+    ViewData["Title"] = "ViewAttendance";
+}
+
+<h1>ViewAttendance</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Camed
+            </th>
+            <th>
+                Date
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item["Camed"]
+                </td>
+                <td>
+                    @item["Date"]
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

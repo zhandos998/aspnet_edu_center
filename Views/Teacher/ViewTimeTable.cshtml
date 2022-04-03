@@ -1,0 +1,39 @@
+﻿@model List<Dictionary<string, object>>
+
+@{
+    ViewData["Title"] = "ViewGroups";
+}
+
+<h1>ViewGroup</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Week_day
+            </th>
+            <th>
+                Time
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="DetailsGroup" asp-route-id="@item["Id"]">@item["Name"]</a>
+                </td>
+                <td>
+                    @item["Week_day"]
+                </td>
+                <td>
+                    @item["Time"]
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

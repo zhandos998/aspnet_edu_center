@@ -187,6 +187,7 @@ namespace aspnet_edu_center.Controllers.Admin
             await _context.SaveChangesAsync();
             return RedirectToAction("ViewGroups");
         }
+        
 
         public IActionResult ViewGroup_Users(int id)
         {
@@ -336,7 +337,74 @@ namespace aspnet_edu_center.Controllers.Admin
             await _context.SaveChangesAsync();
             return RedirectToAction("ViewGroup_types");
         }
+        public IActionResult TimeTableGroup(int id)
+        {
+            ViewBag.Group_id = id;
+            ViewBag.Group_Name = _context.Groups.FirstOrDefault(u => u.Id==id).Name;
+            var timetable = _context.Timetables
+                .Where(u => u.Group_id == id);
+            List<Dictionary<string, object>> timetableList = new List<Dictionary<string, object>>();
+            foreach (var user in timetable)
+            {
+                string week = "";
+                switch (user.Week_day){
+                    case 1:week = "Понедельник"; break;
+                    case 2:week = "Вторник"; break;
+                    case 3:week = "Среда"; break;
+                    case 4:week = "Четверг"; break;
+                    case 5:week = "Пятница"; break;
+                    case 6:week = "Суббота"; break;
+                    case 7:week = "Воскресенье"; break;
+                }
+                timetableList.Add(new Dictionary<string, object>() {
+                    { "Id", user.Id },
+                    { "Week_day", week },
+                    { "Time", user.Time }
+                });
+            }
+            return View(timetableList);
+        }
+        public IActionResult CreateTimeTableGroup(int id)
+        {
+            ViewBag.Group_id = id;
+            return View();
+        }
 
-        
+        [HttpPost]
+        public async Task<IActionResult> CreateTimeTableGroup(Timetable model)
+        {
+            Timetable timetable = new Timetable { Group_id = model.Group_id, Week_day = model.Week_day, Time = model.Time};
+            _context.Timetables.Add(timetable);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("TimeTableGroup", new {id = model.Group_id });
+        }
+        public IActionResult EditTimeTableGroup(int id)
+        {
+            ViewBag.Group_id = id;
+            Timetable timetable = _context.Timetables.FirstOrDefault(u => u.Id == id);
+            return View(timetable);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditTimeTableGroup(Timetable model)
+        {
+            Timetable timetable = await _context.Timetables.FirstOrDefaultAsync(u => u.Id == model.Id);
+            if (timetable != null)
+            {
+                timetable.Week_day = model.Week_day;
+                timetable.Time = model.Time;
+                
+                _context.Entry(timetable).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("TimeTableGroup", new { id = model.Group_id });
+        }
+        public IActionResult DeleteTimeTableGroup(int id,int group_id)
+        {
+            _context.Timetables.Remove(_context.Timetables.FirstOrDefault(u => u.Id == id));
+            _context.SaveChanges();
+            return RedirectToAction("TimeTableGroup", new { id = group_id });
+        }
+
     }
 }
