@@ -152,14 +152,14 @@ namespace aspnet_edu_center.Controllers.Student
             }
             return View(usersList);
         }
-        public ActionResult AddDocument(int id)
+        public ActionResult AddDocument(int id, int group_id)
         {
             ViewBag.Document_id = id;
-            ViewBag.Group_id = id;
+            ViewBag.Group_id = group_id;
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> AddDocument(IFormFile Url, int Document_id, int Group_id, string Name)
+        public async Task<IActionResult> AddDocument(IFormFile Url, int Document_id, int group_id, string Name)
         {
             if (Url != null)
             {
@@ -175,7 +175,7 @@ namespace aspnet_edu_center.Controllers.Student
                 _context.SaveChanges();
             }
 
-            return RedirectToAction("DetailsGroup", new { id = Group_id });
+            return RedirectToAction("DetailsGroup", new { id = group_id });
         }
 
 

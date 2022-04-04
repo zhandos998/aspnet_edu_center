@@ -49,7 +49,7 @@
                 <a asp-action="DownloadDocument" asp-route-id="@item.Id" asp-route-group_id="@ViewBag.Group_id">@Html.DisplayFor(modelItem => item.Doc_name)</a>
             </td>
             <td>
-                <a asp-action="AddDocument" asp-route-id="@item.Id">Прикрепить документ</a>
+                <a asp-action="AddDocument" asp-route-id="@item.Id" asp-route-group_id="@ViewBag.Group_id">Прикрепить документ</a>
             </td>
 
         </tr>

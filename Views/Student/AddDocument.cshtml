@@ -13,7 +13,7 @@
         <form asp-action="AddDocument" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="Document_id" class="form-control d-none" value="@ViewBag.Document_id" />
-            <input name="Group_id" class="form-control d-none" value="@ViewBag.Group_id" />
+            <input name="group_id" class="form-control d-none" value="@ViewBag.Group_id" />
 
             <div class="custom-file mb-3">
                 <label asp-for="Url" class="custom-file-label">Choose file</label>
