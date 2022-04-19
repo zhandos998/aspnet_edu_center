@@ -112,7 +112,6 @@ namespace aspnet_edu_center.Controllers.Student
         }
         public ActionResult DetailsGroup(int id)
         {
-
             ViewBag.Group_id = id;
             return View(_context.Documents.Where(x => x.Group_id == id));
         }
