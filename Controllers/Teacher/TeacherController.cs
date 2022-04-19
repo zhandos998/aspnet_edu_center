@@ -175,7 +175,7 @@ namespace aspnet_edu_center.Controllers.Teacher
                 });
             }
             var attens = _context.Users.
-                Where(a=>a.Id == id).
+                Where(a => a.Id == id).
                 Join(_context.Attendances,
                 a => a.Id,
                 b => b.User_id,
@@ -196,6 +196,39 @@ namespace aspnet_edu_center.Controllers.Teacher
                 });
             }
             ViewBag.Attendances = obj;
+            //---------------------------------
+            var studDocs = _context.StudDocuments.
+                Where(a=>a.Student_id == id)
+                .Join(_context.Documents,
+                a => a.Document_id,
+                b => b.Id,
+                (a, b) => new
+                {
+                    Id = a.Id,
+                    Document_id = a.Document_id,
+                    Url = a.Url,
+                    Doc_name = a.Doc_name,
+                    created_at = a.created_at,
+                    Document_Teacher = b.Doc_name
+
+                })
+                .ToList();
+
+
+            obj = new List<Dictionary<string, object>>();
+
+            foreach (var value in studDocs)
+            {
+                obj.Add(new Dictionary<string, object>() {
+                    { "Id", value.Id },
+                    { "Document_id", value.Document_id },
+                    { "Document_Teacher", value.Document_Teacher },
+                    { "Url", value.Url },
+                    { "Doc_name", value.Doc_name },
+                    { "created_at", value.created_at }
+                });
+            }
+            ViewBag.StudDocuments = obj;
             return View(usersList);
         }
         [HttpPost]
@@ -394,8 +427,18 @@ namespace aspnet_edu_center.Controllers.Teacher
             }
             return View(usersList);
         }
+        public IActionResult DownloadStudDocument(int id)
+        {
+            System.Console.WriteLine("------------------------------------------------------");
+            System.Console.WriteLine(id);
+            string path = _context.StudDocuments.Find(id).Url;
+            string file_path = _appEnvironment.WebRootPath + path;
+            string file_type = "application/octet-stream";
+            string file_name = _context.StudDocuments.Find(id).Doc_name;
+            return PhysicalFile(file_path, file_type, file_name);
+        }
 
-        
+
 
     }
 }

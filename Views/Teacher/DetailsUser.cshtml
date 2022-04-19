@@ -75,6 +75,48 @@
 
 </table>
 
+
+<h3>StudDocuments</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Document_Teacher
+            </th>
+            <th>
+                Doc_name
+            </th>
+            <th>
+                Date
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.StudDocuments)
+        {
+            <tr>
+                <td>
+                    @item["Id"]
+                </td>
+                <td>
+                    <a asp-action="DownloadDocument" asp-route-id="@item["Document_id"]">@item["Document_Teacher"]</a>
+                </td>
+                <td>
+                    <a asp-action="DownloadStudDocument" asp-route-id="@item["Id"]">@item["Doc_name"]</a>
+                </td>
+                <td>
+                    @item["created_at"]
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
 <h1>Поставить балл</h1>
 
 @*<form asp-action="DetailsUser">*@
