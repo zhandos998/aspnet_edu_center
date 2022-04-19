@@ -1,12 +1,12 @@
 ﻿@model aspnet_edu_center.Models.Group_type
 
 @{
-    ViewData["Title"] = "EditGroup_type";
+    ViewData["Title"] = "Группа типін өзгерту";
 }
 
-<h1>EditGroup_type</h1>
+<h1>Группа типін өзгерту</h1>
 
-<h4>Group_type</h4>
+<h4>Группа типі</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,19 +14,20 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Аты</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Сақтау" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="ViewGroup_types">Back to List</a>
+    <a asp-action="ViewGroup_types">Тізімге оралу</a>
+
 </div>
 
 @section Scripts {

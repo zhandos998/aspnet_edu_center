@@ -1,10 +1,10 @@
 ﻿@model aspnet_edu_center.Models.Document
 
 @{
-    ViewData["Title"] = "Add Document";
+    ViewData["Title"] = "Документті қосу";
 }
 
-<h1>Add Document</h1>
+<h1>Документті қосу</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -16,24 +16,24 @@
                 <span asp-validation-for="Group_id" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Документ аты</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="custom-file mb-3">
-                <label asp-for="Url" class="custom-file-label">Choose file</label>
+                <label asp-for="Url" class="custom-file-label">Файлды қосу</label>
                 <input asp-for="Url" class="custom-file-input" type="file"/>
                 <span asp-validation-for="Url" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Қосу" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-primary"s asp-action="Index">Тізімге оралу</a>
 </div>
 
 @section Scripts {

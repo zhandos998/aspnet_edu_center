@@ -1,33 +1,33 @@
 ﻿@model IEnumerable<aspnet_edu_center.Models.Group>
 
 @{
-    ViewData["Title"] = "ViewGroups";
+    ViewData["Title"] = "Группалар";
 }
 
-<h1>ViewGroups</h1>
+<h1>Группалар</h1>
 
 <p>
-    <a asp-action="CreateGroup">Create New</a>
+    <a class="text-dark btn btn-primary" asp-action="CreateGroup">Группаны қосу</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Группаның аты
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Group_type)
+                Группаның типі
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Supervisor_id)
+                Эдвайзер Id
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.date_form)
+                Басталу уақыты
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.date_to)
+                Аяқталу уақыты
             </th>
-            <th></th>
+            <th style="width:25%">Функциялар</th>
         </tr>
     </thead>
     <tbody>
@@ -49,11 +49,18 @@
                 @Html.DisplayFor(modelItem => item.date_to)
             </td>
             <td>
-                <a asp-action="EditGroup" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="DetailsGroup" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="ViewGroup_Users" asp-route-id="@item.Id">Users</a> |
-                <a asp-action="DeleteGroup" asp-route-id="@item.Id">Delete</a> |
-                <a asp-action="TimeTableGroup" asp-route-id="@item.Id">Time Table</a>
+
+                <div class="btn-group rounded w-100" role="group">
+                    <a class="text-dark btn border" asp-route-id="@item.Id" asp-action="EditGroup">Өзгерту</a>
+                    <a class="text-dark btn border" asp-route-id="@item.Id" asp-action="DetailsGroup">Нақтырақ</a>
+                    <a class="text-dark btn border" asp-route-id="@item.Id" asp-action="DeleteGroup">Жою</a>
+                </div>
+
+                <div class="btn-group rounded w-100" role="group">
+                    <a class="text-dark btn border" asp-route-id="@item.Id" asp-action="ViewGroup_Users">Қолданушылар</a>
+                    <a class="text-dark btn border" asp-route-id="@item.Id" asp-action="TimeTableGroup">Сабақ кестесі</a>
+                </div>
+
             </td>
         </tr>
 }

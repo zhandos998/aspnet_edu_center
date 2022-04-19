@@ -1,33 +1,33 @@
 ﻿@model IEnumerable<aspnet_edu_center.Models.User> 
 
 @{
-    ViewData["Title"] = "ViewUsers";
+    ViewData["Title"] = "Қолданушылар";
 }
 
-<h1>ViewUsers</h1>
+<h1>Қолданушылар</h1>
 
 <p>
-    <a asp-action="CreateUser">Create New</a>
+    <a class="text-dark btn btn-primary" asp-action="CreateUser">Жаңа қолданушыны қосу</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Аты-жөні
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                Email
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Password)
+                Құпия сөз
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Tel_num)
+                Телефон нөмірі
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Role_id)
+                Рөл Id
             </th>
-            <th></th>
+            <th>Функциялар</th>
         </tr>
     </thead>
     <tbody>
@@ -49,9 +49,12 @@
                 @Html.DisplayFor(modelItem => item.Role_id)
             </td>
             <td>
-                <a asp-action="EditUser" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="DetailsUser" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="DeleteUser" asp-route-id="@item.Id">Delete</a>
+                <div class="btn-group rounded" role="group">
+                    <a class="text-dark btn border" asp-route-id="@item.Id" asp-action="EditUser">Өзгерту</a>
+                    <a class="text-dark btn border" asp-route-id="@item.Id" asp-action="DetailsUser">Нақтырақ</a>
+                    <a class="text-dark btn border" asp-route-id="@item.Id" asp-action="DeleteUser">Жою</a>
+                </div>
+
             </td>
         </tr>
 }

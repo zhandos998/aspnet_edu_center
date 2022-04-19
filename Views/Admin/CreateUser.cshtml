@@ -1,11 +1,11 @@
 ﻿@model aspnet_edu_center.ViewModels.RegisterModel
 @{
-    ViewData["Title"] = "CreateUser";
+    ViewData["Title"] = "Қолданушыны құру";
 }
 
-<h1>CreateUser</h1>
+<h1>Қолданушыны құру</h1>
 
-<h4>User</h4>
+<h4>Қолданушы</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,7 +15,7 @@
             <div class="validation" asp-validation-summary="ModelOnly"></div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Аты-жөні</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
@@ -25,39 +25,39 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
+                <label asp-for="Password" class="control-label">Құпия сөз</label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ConfirmPassword" class="control-label"></label>
+                <label asp-for="ConfirmPassword" class="control-label">Құпияя сөзді қайталау</label>
                 <input asp-for="ConfirmPassword" class="form-control" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Tel_num" class="control-label"></label>
+                <label asp-for="Tel_num" class="control-label">Телефон нөмірі</label>
                 <input asp-for="Tel_num" class="form-control" />
                 <span asp-validation-for="Tel_num" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Role_id" class="control-label"></label>
+                <label asp-for="Role_id" class="control-label">Рөл Id</label>
                 <select asp-for="Role_id" class="form-control">
                     <option>Please select one</option>
-                    <option value='1'>Admin</option>
-                    <option value='2'>Teacher</option>
-                    <option value='3'>Student</option>
+                    <option value='1'>Администратор</option>
+                    <option value='2'>Мұғалім</option>
+                    <option value='3'>Студент</option>
                 </select>
                 <span asp-validation-for="Role_id" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Құру" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="ViewUsers">Back to List</a>
+    <a asp-action="ViewUsers">Тізімге оралу</a>
 </div>
 
 @section Scripts {

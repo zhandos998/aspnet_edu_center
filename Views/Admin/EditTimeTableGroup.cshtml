@@ -1,12 +1,12 @@
 ﻿@model aspnet_edu_center.Models.Timetable
 
 @{
-    ViewData["Title"] = "EditTimeTableGroup";
+    ViewData["Title"] = "Сабақ кестесін өзгерту";
 }
 
-<h1>EditTimeTableGroup</h1>
+<h1>Сабақ кестесін өзгерту</h1>
 
-<h4>Timetable</h4>
+<h4>Сабақ кестесі</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,32 +15,32 @@
             <input type="hidden" asp-for="Id" />
             <input asp-for="Group_id" class="form-control d-none" value=@ViewBag.Group_id />
             <div class="form-group">
-                <label asp-for="Week_day" class="control-label"></label>
+                <label asp-for="Week_day" class="control-label">Апта күні</label>
                 @*<input asp-for="Week_day" class="form-control" />*@
                 <select asp-for="Week_day" class="form-control">
-                    <option value="1">Понедельник</option>
-                    <option value="2">Вторник</option>
-                    <option value="3">Среда</option>
-                    <option value="4">Четверг</option>
-                    <option value="5">Пятница</option>
-                    <option value="6">Суббота</option>
-                    <option value="7">Воскресенье</option>
+                    <option value="1">Дүйсенбі</option>
+                    <option value="2">Сейсенбі</option>
+                    <option value="3">Сәрсенбі</option>
+                    <option value="4">Бейсенбі</option>
+                    <option value="5">Жұма</option>
+                    <option value="6">Сенбі</option>
+                    <option value="7">Жексенбі</option>
                 </select>
                 <span asp-validation-for="Week_day" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Time" class="control-label"></label>
+                <label asp-for="Time" class="control-label">Уақыты</label>
                 <input asp-for="Time" class="form-control" />
                 <span asp-validation-for="Time" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Сақтау" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Тізімге оралу</a>
 </div>
 
