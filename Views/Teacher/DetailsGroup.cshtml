@@ -2,30 +2,30 @@
 
 <h1>@ViewData["Title"]</h1>
 
-    <a asp-action="ViewTests" asp-route-id=@ViewBag.Group_id class="btn btn-primary">Tests</a>
 
-    <a asp-action="ViewDocuments" asp-route-id=@ViewBag.Group_id class="btn btn-primary">Documents</a>
+    <div class="btn-group rounded" role="group">
+        <a asp-action="ViewTests" asp-route-id=@ViewBag.Group_id class="btn border">Тест</a>
+        <a asp-action="ViewDocuments" asp-route-id=@ViewBag.Group_id class="btn border">Документтер</a>
+    </div>
 
 
 
     
-    @*<form asp-action="AttendanceStudent" asp-controller="Teacher" asp-anti-forgery="true">*@
         <table class="table mt-3">
             <thead>
                 <tr>
                     <th>
-                        Name
+                        Оқушының аты
                     </th>
                     <th>
                         Email
                     </th>
                     <th>
-                        Tel_num
+                        Телефон нөмірі
                     </th>
                     <th>
-                        Attendance
+                        Келу-келмеу
                     </th>
-                    @*<th></th>*@
                 </tr>
             </thead>
             <tbody>

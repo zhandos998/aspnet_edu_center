@@ -3,30 +3,29 @@
 
 @{
 
-    ViewData["Title"] = "ViewDocuments";
+    ViewData["Title"] = "Документтер";
 }
 
-<h1>ViewDocuments</h1>
+<h1>Документтер</h1>
 
 <p>
-    <a asp-action="AddDocument" asp-route-id=@ViewBag.Group_id>Add Document</a>
+    <a asp-action="AddDocument" asp-route-id=@ViewBag.Group_id>Документті қосу</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                Id
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Тақырыбы
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Url)
+                Документтің аты
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Doc_name)
+                Функциялар
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -39,14 +38,14 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Url)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Doc_name)
             </td>
             <td>
-                <a asp-action="DeleteDocument" asp-route-id="@item.Id" asp-route-group_id="@ViewBag.Group_id">Delete</a> | 
-                <a asp-action="DownloadDocument" asp-route-id="@item.Id" asp-route-group_id="@ViewBag.Group_id">Download</a>
+                <div class="btn-group rounded" role="group">
+                    <a class="text-dark btn border"  asp-action="DeleteDocument" asp-route-id="@item.Id" asp-route-group_id="@ViewBag.Group_id">Жою</a>
+                    <a class="text-dark btn border" asp-action="DownloadDocument" asp-route-id="@item.Id" asp-route-group_id="@ViewBag.Group_id">Баптау</a>
+                </div>
+
             </td>
         </tr>
 }

@@ -1,12 +1,12 @@
 ﻿@model aspnet_edu_center.Models.Timetable
 
 @{
-    ViewData["Title"] = "CreateTimeTableGroup";
+    ViewData["Title"] = "Сабақ кестесіне сабақ қосу";
 }
 
-<h1>CreateTimeTableGroup</h1>
+<h1>Сабақ кестесіне сабақ қосу</h1>
 
-<h4>Timetable</h4>
+<h4>Сабкақ кестесі</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,23 +14,22 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="Group_id" class="form-control d-none" value="@ViewBag.Group_id"/>
             <div class="form-group">
-                <label asp-for="Week_day" class="control-label"></label>
+                <label asp-for="Week_day" class="control-label">Апта күні</label>
                 @*<input asp-for="Week_day" class="form-control" />*@
                 <select asp-for="Week_day" class="form-control">
-                    <option value="1" selected>Понедельник</option>
-                    <option value="2">Вторник</option>
-                    <option value="3">Среда</option>
-                    <option value="4">Четверг</option>
-                    <option value="5">Пятница</option>
-                    <option value="6">Суббота</option>
-                    <option value="7">Воскресенье</option>
+                    <option value="1" selected>Дүйсенбі</option>
+                    <option value="2">Сейсенбі</option>
+                    <option value="3">Сәрсенбі</option>
+                    <option value="4">Бейсенбі</option>
+                    <option value="5">Жұма</option>
+                    <option value="6">Сенбі</option>
+                    <option value="7">Жексенбі</option>
                 </select>
                 <span asp-validation-for="Week_day" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Time" class="control-label"></label>
+                <label asp-for="Time" class="control-label">Уақыты</label>
                 <input asp-for="Time" class="form-control" />
-
                 <span asp-validation-for="Time" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -41,6 +40,6 @@
 </div>
 
 <div>
-    <a asp-action="TimeTableGroup" asp-route-id="@ViewBag.Group_id">Time Table</a>
+    <a asp-action="TimeTableGroup" asp-route-id="@ViewBag.Group_id">Сабақ кестесі</a>
 </div>
 

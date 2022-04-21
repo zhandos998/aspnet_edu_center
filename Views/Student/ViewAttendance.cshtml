@@ -1,18 +1,18 @@
 ﻿@model List<Dictionary<string, object>>
 @{
-    ViewData["Title"] = "ViewAttendance";
+    ViewData["Title"] = "Келу-келмеу саны";
 }
 
-<h1>ViewAttendance</h1>
+<h1>Келу-келмеу саны</h1>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                Camed
+                Келді-келмеді
             </th>
             <th>
-                Date
+                Дата
             </th>
         </tr>
     </thead>
@@ -21,7 +21,14 @@
         {
             <tr>
                 <td>
-                    @item["Camed"]
+                    @if (item["Camed"] is bool)
+                    {
+                        <p>Келді</p>
+                    }
+                    else
+                    {
+                        <p>Келмеді</p>
+                    }
                 </td>
                 <td>
                     @item["Date"]

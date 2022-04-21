@@ -1,23 +1,22 @@
 ﻿@model List<Dictionary<string, object>>
 
 @{
-    ViewData["Title"] = "TimeTableGroup";
+    ViewData["Title"] = "Сабақ кестесі";
 }
 
-<h1>@ViewBag.Group_Name</h1>
-<p>Timetable</p>
+<h1>Сабақ кестесі</h1>
 
 <p>
-    <a asp-action="CreateTimeTableGroup" asp-route-id="@ViewBag.Group_id">Create New</a>
+    <a class="text-dark btn btn-primary" asp-route-id="@ViewBag.Group_id" asp-action="CreateTimeTableGroup">Сабақ қосу</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                Week_day
+                Апта күні
             </th>
             <th>
-                Time
+                Уақыты
             </th>
             <th></th>
         </tr>
@@ -33,8 +32,12 @@
                     @item["Time"]
                 </td>
                 <td>
-                    <a asp-action="EditTimeTableGroup" asp-route-id="@item["Id"]">Edit</a> |
-                    <a asp-action="DeleteTimeTableGroup" asp-route-id="@item["Id"]" asp-route-group_id="@ViewBag.Group_id">Delete</a>
+
+                    <div class="btn-group rounded" role="group">
+                        <a class="text-dark btn border" asp-route-id="@item["Id"]" asp-action="EditTimeTableGroup">Өзгерту</a>
+                        <a class="text-dark btn border" asp-route-id="@item["Id"]" asp-route-group_id="@ViewBag.Group_id" asp-action="DeleteTimeTableGroup">Жою</a>
+                    </div>
+
                 </td>
             </tr>
         }

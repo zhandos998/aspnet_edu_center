@@ -1,35 +1,42 @@
 ﻿@model IEnumerable<aspnet_edu_center.Models.Group_type>
 
 @{
-    ViewData["Title"] = "ViewGroup_types";
+    ViewData["Title"] = "Группа типтері";
 }
 
-<h1>ViewGroup_types</h1>
+<h1>Группа типтері</h1>
 
 <p>
-    <a asp-action="CreateGroup_type">Create New</a>
+    <a class="text-dark btn btn-primary" asp-area="" asp-controller="Admin" asp-action="CreateGroup_type">Жаңа группа типін қосу</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Аты
             </th>
-            <th></th>
+            <th style="width:20%">
+                Функциялар
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                <a asp-action="EditGroup_type" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="DetailsGroup_type" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="DeleteGroup_type" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+
+                    <div class="btn-group rounded" role="group">
+                        <a class="text-dark btn border" asp-route-id="@item.Id" asp-action="EditGroup_type">Өзгерту</a>
+                        <a class="text-dark btn border" asp-route-id="@item.Id" asp-action="DetailsGroup_type">Нақтырақ</a>
+                        <a class="text-dark btn border" asp-route-id="@item.Id" asp-action="DeleteGroup_type">Жою</a>
+                    </div>
+
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

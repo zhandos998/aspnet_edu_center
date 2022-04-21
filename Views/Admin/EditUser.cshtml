@@ -1,12 +1,12 @@
 ﻿@model aspnet_edu_center.Models.User
 
 @{
-    ViewData["Title"] = "EditUser";
+    ViewData["Title"] = "Қолданушыны өзгерту";
 }
 
-<h1>EditUser</h1>
+<h1>Қолданушыны өзгерту</h1>
 
-<h4>User</h4>
+<h4>Қолданушы</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Аты-жөні</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
@@ -24,29 +24,34 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
+                <label asp-for="Password" class="control-label">Құпия сөз</label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Tel_num" class="control-label"></label>
+                <label asp-for="Tel_num" class="control-label">Телефон нөмірі</label>
                 <input asp-for="Tel_num" class="form-control" />
                 <span asp-validation-for="Tel_num" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Role_id" class="control-label"></label>
-                <input asp-for="Role_id" class="form-control" />
+                <label asp-for="Role_id" class="control-label">Рөл</label>
+                <select asp-for="Role_id" class="custom-select">
+                @foreach (var item in ViewBag.Roles)
+                {
+                   <option value=@item["Id"]>@item["Name"]</option>
+                }
+                </select>
                 <span asp-validation-for="Role_id" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Сақтау" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Тізімге оралу</a>
 </div>
 
 @section Scripts {
