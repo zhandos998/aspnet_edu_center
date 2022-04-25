@@ -2,36 +2,31 @@
 @model IEnumerable<aspnet_edu_center.Models.Document>
 
 @{
-    ViewData["Title"] = "DetailsGroup";
+    ViewData["Title"] = "Группа";
 }
 
-<h1>DetailsGroup</h1>
+<h1>Группа</h1>
 
-<ul class="navbar-nav">
-    <li class="nav-item">
-        <a class="nav-link text-dark" href="/Student/ViewGrades">View Grades</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" href="/Student/ViewAttendance">View Attendance</a>
-    </li>
-    @*<li class="nav-item">
-        <a class="nav-link text-dark" href="/Student/AddDocument">Add Document</a>
-    </li>*@
-</ul>
+<div class="btn-group rounded mb-5" role="group">
+    <a class="text-dark btn border" href="/Student/ViewGrades">Бағаларды қарау</a>
+    <a class="text-dark btn border" href="/Student/ViewAttendance">Келу-келмеу саны</a>
+    <!-- <a class="text-dark btn border" href="/Student/AddDocument">Документ қосу</a> -->
+</div>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                Id
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Группаның аты
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Doc_name)
+                Документ
             </th>
             <th>
+                Функциялар
             </th>
         </tr>
     </thead>
@@ -49,7 +44,7 @@
                 <a asp-action="DownloadDocument" asp-route-id="@item.Id" asp-route-group_id="@ViewBag.Group_id">@Html.DisplayFor(modelItem => item.Doc_name)</a>
             </td>
             <td>
-                <a asp-action="AddDocument" asp-route-id="@item.Id" asp-route-group_id="@ViewBag.Group_id">Прикрепить документ</a>
+                <a class="btn btn-primary text-dark" asp-action="AddDocument" asp-route-id="@item.Id" asp-route-group_id="@ViewBag.Group_id">Документті тіркеу</a>
             </td>
 
         </tr>

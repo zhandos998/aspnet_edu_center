@@ -20,12 +20,22 @@
             </div>
             <div class="form-group">
                 <label asp-for="Group_type" class="control-label">Группа типі</label>
-                <input asp-for="Group_type" class="form-control" />
+                <select asp-for="Group_type" class="custom-select">
+                @foreach (var item in ViewBag.Group_types)
+                {
+                   <option value=@item["Id"]>@item["Name"]</option>
+                }
+                </select>
                 <span asp-validation-for="Group_type" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Supervisor_id" class="control-label">Эдвайзер Id</label>
-                <input asp-for="Supervisor_id" class="form-control" />
+                <label asp-for="Supervisor_id" class="control-label">Эдвайзер</label>
+                <select asp-for="Supervisor_id" class="custom-select">
+                @foreach (var item in ViewBag.Users)
+                {
+                   <option value=@item["Id"]>@item["Name"]</option>
+                }
+                </select>
                 <span asp-validation-for="Supervisor_id" class="text-danger"></span>
             </div>
             <div class="form-group">

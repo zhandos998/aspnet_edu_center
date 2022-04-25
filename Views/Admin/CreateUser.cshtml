@@ -9,8 +9,6 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        @*<div class="validation" asp-validation-summary="ModelOnly"></div>*@
-        @*<form asp-action="CreateUser" method="post">*@
         <form asp-action="CreateUser" asp-controller="Admin" asp-anti-forgery="true">
             <div class="validation" asp-validation-summary="ModelOnly"></div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -40,12 +38,12 @@
                 <span asp-validation-for="Tel_num" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Role_id" class="control-label">Рөл Id</label>
-                <select asp-for="Role_id" class="form-control">
-                    <option>Please select one</option>
-                    <option value='1'>Администратор</option>
-                    <option value='2'>Мұғалім</option>
-                    <option value='3'>Студент</option>
+                <label asp-for="Role_id" class="control-label">Рөл</label>
+                <select asp-for="Role_id" class="custom-select">
+                @foreach (var item in ViewBag.Roles)
+                {
+                   <option value=@item["Id"]>@item["Name"]</option>
+                }
                 </select>
                 <span asp-validation-for="Role_id" class="text-danger"></span>
             </div>

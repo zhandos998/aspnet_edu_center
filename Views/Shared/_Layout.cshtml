@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Education Center</title>
+    <title>@ViewData["Title"] - Білім беру орталығы</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -11,40 +11,39 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Education Center</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Білім беру орталығы</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse">
+                <div class="navbar-collapse collapse d-sm-inline-flex">
 
                     <ul class="navbar-nav mr-auto">
-
                         @if (User.Identity.IsAuthenticated && User.IsInRole("1"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ViewGroup_types">Группа типтері</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ViewGroups">Groups</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ViewGroups">Группалар</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ViewUsers">Users</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ViewUsers">Қолданушылар</a>
                             </li>
                         }
                         else if (User.Identity.IsAuthenticated && User.IsInRole("2"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Teacher" asp-action="ViewGroups">View Groups</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Teacher" asp-action="ViewGroups">Группалар</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Teacher" asp-action="ViewTimeTable">View TimeTable</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Teacher" asp-action="ViewTimeTable">Сабақ кестесі</a>
                             </li>
                         }
                         else if (User.Identity.IsAuthenticated && User.IsInRole("3"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="ViewTimetable">View Timetable</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="ViewTimetable">Сабақ кестесі</a>
                             </li>
                         }
 
@@ -52,7 +51,7 @@
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="SignOut">Sign out</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="SignOut">Аккаунттан шығу</a>
                         </li>
                     </ul>
                 </div>
@@ -67,7 +66,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - aspnet_edu_center - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - Білім беру орталығы
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

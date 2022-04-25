@@ -1,4 +1,5 @@
-﻿@model IEnumerable<aspnet_edu_center.Models.User> 
+﻿@model List<Dictionary<string, object>>
+
 
 @{
     ViewData["Title"] = "Қолданушылар";
@@ -34,25 +35,25 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @item["Name"]
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @item["Email"]
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Password)
+                @item["Password"]
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Tel_num)
+                @item["Tel_num"]
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Role_id)
+                @item["Role"]
             </td>
             <td>
                 <div class="btn-group rounded" role="group">
-                    <a class="text-dark btn border" asp-route-id="@item.Id" asp-action="EditUser">Өзгерту</a>
-                    <a class="text-dark btn border" asp-route-id="@item.Id" asp-action="DetailsUser">Нақтырақ</a>
-                    <a class="text-dark btn border" asp-route-id="@item.Id" asp-action="DeleteUser">Жою</a>
+                    <a class="text-dark btn border" asp-route-id=@item["Id"] asp-action="EditUser">Өзгерту</a>
+                    <a class="text-dark btn border" asp-route-id=@item["Id"] asp-action="DetailsUser">Нақтырақ</a>
+                    <a class="text-dark btn border" asp-route-id=@item["Id"] asp-action="DeleteUser">Жою</a>
                 </div>
 
             </td>

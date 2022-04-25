@@ -1,7 +1,7 @@
 ﻿@model List<Dictionary<string, object>>
 
 @{
-    ViewData["Title"] = "View Group";
+    ViewData["Title"] = "Группамды қарау";
 }
 
 
@@ -10,19 +10,19 @@
     <thead>
         <tr>
             <th>
-                Name
+                Аты-жөні
             </th>
             <th>
                 Email
             </th>
             <th>
-                Tel_num
+                Телефон нөмірі
             </th>
             <th>
-                Group_type
+                Группа типі
             </th>
             <th>
-                Supervisor_id
+                Эдвайзер Id
             </th>
             <th></th>
         </tr>
@@ -46,7 +46,6 @@
                 @item["Supervisor_id"]
             </td>
             <td>
-                @*<a asp-action="ViewAttendance" asp-route-id=@item["Id"]>Attendance</a>*@
                 <input id="checkbox" type="checkbox" />
             </td>
         </tr>

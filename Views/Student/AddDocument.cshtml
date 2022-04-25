@@ -1,12 +1,11 @@
 ﻿@model aspnet_edu_center.Models.StudDocument
 
 @{
-    ViewData["Title"] = "Документті қосу";
+    ViewData["Title"] = "Документ қосу";
 }
 
-<h1>Документті қосу</h1>
+<h1>Документ қосу</h1>
 
-<h4>StudDocument</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -16,18 +15,18 @@
             <input name="group_id" class="form-control d-none" value="@ViewBag.Group_id" />
 
             <div class="custom-file mb-3">
-                <label asp-for="Url" class="custom-file-label">Файлды таңда</label>
+                <label asp-for="Url" class="custom-file-label">Файлды таңдау</label>
                 <input asp-for="Url" class="custom-file-input" type="file" />
                 <span asp-validation-for="Url" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Сақтау" class="btn btn-primary" />
+                <input type="submit" value="Құру" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Тізімге оралу</a>
 </div>
 

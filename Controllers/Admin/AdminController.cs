@@ -26,11 +26,47 @@ namespace aspnet_edu_center.Controllers.Admin
         }
         public IActionResult ViewUsers()
         {
-            DbSet<User> users = _context.Users;
-            return View(users);
+            //DbSet<User> users = _context.Users;
+            var users = _context.Users
+            .Join(_context.Roles,
+                a => a.Role_id,
+                b => b.Id,
+                (a, b) => new
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    Email = a.Email,
+                    Password = a.Password,
+                    Tel_num = a.Tel_num,
+                    Role = b.Name,
+                }
+            )
+            .ToList();
+            List<Dictionary<string, object>> usersList = new List<Dictionary<string, object>>();
+            foreach (var user in users)
+            {
+                usersList.Add(new Dictionary<string, object>() {
+                    { "Id", user.Id },
+                    { "Name", user.Name },
+                    { "Email", user.Email },
+                    { "Password", user.Password },
+                    { "Tel_num", user.Tel_num },
+                    { "Role", user.Role }
+                });
+            }
+            return View(usersList);
         }
         public IActionResult CreateUser()
         {
+            List<Dictionary<string, object>> RolesList = new List<Dictionary<string, object>>();
+            foreach (var role in _context.Roles.ToList())
+            {
+                RolesList.Add(new Dictionary<string, object>() {
+                    { "Id", role.Id },
+                    { "Name", role.Name },
+                });
+            }
+            ViewBag.Roles = RolesList;
             return View();
         }
 
@@ -56,9 +92,18 @@ namespace aspnet_edu_center.Controllers.Admin
             }
             return View(model);
         }
+
         public IActionResult EditUser(int id)
         {
-            
+            List<Dictionary<string, object>> RolesList = new List<Dictionary<string, object>>();
+            foreach (var role in _context.Roles.ToList())
+            {
+                RolesList.Add(new Dictionary<string, object>() {
+                    { "Id", role.Id },
+                    { "Name", role.Name },
+                });
+            }
+            ViewBag.Roles = RolesList;
             User users = _context.Users.FirstOrDefault(u => u.Id == id);
             return View(users);
         }
@@ -108,11 +153,69 @@ namespace aspnet_edu_center.Controllers.Admin
 
         public IActionResult ViewGroups()
         {
-            DbSet<Group> groups = _context.Groups;
-            return View(groups);
+            //DbSet<Group> groups = _context.Groups;
+            var groups = _context.Groups
+            .Join(_context.Group_types,
+            a => a.Group_type,
+            b => b.Id,
+            (a, b) => new
+            {
+                Id = a.Id,
+                Name = a.Name,
+                Supervisor_id = a.Supervisor_id,
+                Group_type = b.Name,
+                date_form = a.date_form.ToShortDateString(),
+                date_to = a.date_to.ToShortDateString(),
+            }
+            )
+            .Join(_context.Users,
+            a => a.Supervisor_id,
+            b => b.Id,
+            (a, b) => new
+            {
+                Id = a.Id,
+                Name = a.Name,
+                Supervisor = b.Name,
+                Group_type = a.Group_type,
+                date_form = a.date_form,
+                date_to = a.date_to,
+            }
+            )
+            .ToList();
+            List<Dictionary<string, object>> groupsList = new List<Dictionary<string, object>>();
+            foreach (var group in groups)
+            {
+                groupsList.Add(new Dictionary<string, object>() {
+                    { "Id", group.Id },
+                    { "Name", group.Name },
+                    { "Supervisor", group.Supervisor },
+                    { "Group_type", group.Group_type },
+                    { "date_form", group.date_form },
+                    { "date_to", group.date_to }
+                });
+            }
+            return View(groupsList);
         }
         public IActionResult CreateGroup()
         {
+            List<Dictionary<string, object>> Group_typesList = new List<Dictionary<string, object>>();
+            foreach (var Group_type in _context.Group_types.ToList())
+            {
+                Group_typesList.Add(new Dictionary<string, object>() {
+                    { "Id", Group_type.Id },
+                    { "Name", Group_type.Name },
+                });
+            }
+            ViewBag.Group_types = Group_typesList;
+            List<Dictionary<string, object>> UsersList = new List<Dictionary<string, object>>();
+            foreach (var user in _context.Users.Where(u => u.Id == 2).ToList())
+            {
+                UsersList.Add(new Dictionary<string, object>() {
+                    { "Id", user.Id },
+                    { "Name", user.Name },
+                });
+            }
+            ViewBag.Users = UsersList;
             return View();
         }
 
@@ -146,7 +249,24 @@ namespace aspnet_edu_center.Controllers.Admin
 
         public IActionResult EditGroup(int id)
         {
-
+            List<Dictionary<string, object>> Group_typesList = new List<Dictionary<string, object>>();
+            foreach (var Group_type in _context.Group_types.ToList())
+            {
+                Group_typesList.Add(new Dictionary<string, object>() {
+                    { "Id", Group_type.Id },
+                    { "Name", Group_type.Name },
+                });
+            }
+            ViewBag.Group_types = Group_typesList;
+            List<Dictionary<string, object>> UsersList = new List<Dictionary<string, object>>();
+            foreach (var user in _context.Users.Where(u => u.Id == 2).ToList())
+            {
+                UsersList.Add(new Dictionary<string, object>() {
+                    { "Id", user.Id },
+                    { "Name", user.Name },
+                });
+            }
+            ViewBag.Users = UsersList;
             Group groups = _context.Groups.FirstOrDefault(u => u.Id == id);
             return View(groups);
         }
@@ -348,13 +468,13 @@ namespace aspnet_edu_center.Controllers.Admin
             {
                 string week = "";
                 switch (user.Week_day){
-                    case 1:week = "Понедельник"; break;
-                    case 2:week = "Вторник"; break;
-                    case 3:week = "Среда"; break;
-                    case 4:week = "Четверг"; break;
-                    case 5:week = "Пятница"; break;
-                    case 6:week = "Суббота"; break;
-                    case 7:week = "Воскресенье"; break;
+                    case 1:week = "Дүйсенбі"; break;
+                    case 2:week = "Сейсенбі"; break;
+                    case 3:week = "Сәрсенбі"; break;
+                    case 4:week = "Бейсенбі"; break;
+                    case 5:week = "Жұма"; break;
+                    case 6:week = "Сенбі"; break;
+                    case 7:week = "Жексенбі"; break;
                 }
                 timetableList.Add(new Dictionary<string, object>() {
                     { "Id", user.Id },

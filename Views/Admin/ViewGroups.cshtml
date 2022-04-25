@@ -1,4 +1,4 @@
-﻿@model IEnumerable<aspnet_edu_center.Models.Group>
+﻿@model List<Dictionary<string, object>>
 
 @{
     ViewData["Title"] = "Группалар";
@@ -19,7 +19,7 @@
                 Группаның типі
             </th>
             <th>
-                Эдвайзер Id
+                Эдвайзер
             </th>
             <th>
                 Басталу уақыты
@@ -34,31 +34,31 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @item["Name"]
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Group_type)
+                @item["Group_type"]
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Supervisor_id)
+                @item["Supervisor"]
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.date_form)
+                @item["date_form"]
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.date_to)
+                @item["date_to"]
             </td>
             <td>
 
                 <div class="btn-group rounded w-100" role="group">
-                    <a class="text-dark btn border" asp-route-id="@item.Id" asp-action="EditGroup">Өзгерту</a>
-                    <a class="text-dark btn border" asp-route-id="@item.Id" asp-action="DetailsGroup">Нақтырақ</a>
-                    <a class="text-dark btn border" asp-route-id="@item.Id" asp-action="DeleteGroup">Жою</a>
+                    <a class="text-dark btn border" asp-route-id=@item["Id"] asp-action="EditGroup">Өзгерту</a>
+                    <a class="text-dark btn border" asp-route-id=@item["Id"] asp-action="DetailsGroup">Нақтырақ</a>
+                    <a class="text-dark btn border" asp-route-id=@item["Id"] asp-action="DeleteGroup">Жою</a>
                 </div>
 
                 <div class="btn-group rounded w-100" role="group">
-                    <a class="text-dark btn border" asp-route-id="@item.Id" asp-action="ViewGroup_Users">Қолданушылар</a>
-                    <a class="text-dark btn border" asp-route-id="@item.Id" asp-action="TimeTableGroup">Сабақ кестесі</a>
+                    <a class="text-dark btn border" asp-route-id=@item["Id"] asp-action="ViewGroup_Users">Қолданушылар</a>
+                    <a class="text-dark btn border" asp-route-id=@item["Id"] asp-action="TimeTableGroup">Сабақ кестесі</a>
                 </div>
 
             </td>

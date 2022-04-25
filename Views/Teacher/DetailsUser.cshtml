@@ -1,7 +1,7 @@
 ﻿@model List<Dictionary<string, object>>
 
 @{
-    ViewData["Title"] = "DetailsUser";
+    ViewData["Title"] = ViewBag.User_Name;
 }
 
 <h1>@ViewBag.User_Name</h1>
@@ -10,10 +10,10 @@
     <thead>
         <tr>
             <th>
-                Grades
+                Баға
             </th>
             <th>
-                Date
+                Дата
             </th>
         </tr>
     </thead>
@@ -39,16 +39,16 @@
 
 </table>
 
-<h3>Attendances</h3>
+<h3>Келу-келмеу</h3>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                Camed
+                Келді
             </th>
             <th>
-                Date
+                Дата
             </th>
         </tr>
     </thead>
@@ -59,11 +59,11 @@
                 <td>
                     @if (item["Camed"])
                     {
-                        <p>Yes</p>
+                        <p>Келді</p>
                     }
                     else
                     {
-                        <p>No</p>
+                        <p>Келмеді</p>
                     }
                 </td>
                 <td>
@@ -76,7 +76,7 @@
 </table>
 
 
-<h3>StudDocuments</h3>
+<h3>Оқушының документі</h3>
 
 <table class="table">
     <thead>
@@ -85,13 +85,13 @@
                 Id
             </th>
             <th>
-                Document_Teacher
+                Тіркелген документ
             </th>
             <th>
-                Doc_name
+                Документ
             </th>
             <th>
-                Date
+                Дата
             </th>
         </tr>
     </thead>
@@ -117,12 +117,15 @@
 
 </table>
 
-<h1>Поставить балл</h1>
+<h1>Оқушыңа балл қою</h1>
 
-@*<form asp-action="DetailsUser">*@
 <form asp-action="CreateGrade" asp-controller="Teacher" asp-route-id="@ViewBag.Group_id" asp-route-user_id="@ViewBag.User_id" asp-anti-forgery="true">
-    <input name="grade" type="number" />
-    <input type="submit" />
+    <div class="input-group w-25 mb-3">
+        <input name="grade" type="number" class="form-control">
+        <div class="input-group-append">
+            <input class="btn btn-primary text-dark" type="submit" value="Жіберу"/>
+        </div>
+    </div>
 </form>
 
 

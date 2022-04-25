@@ -96,7 +96,30 @@ namespace aspnet_edu_center.Controllers.Teacher
         public IActionResult ViewGroups()
         {
             var users = _context.Groups.
-            Where(a => a.Supervisor_id == int.Parse(User.Identity.Name)).ToList();
+            Where(a => a.Supervisor_id == int.Parse(User.Identity.Name)).
+            Join(_context.Group_types,
+            a => a.Group_type,
+            b => b.Id,
+            (a, b) => new
+            {
+                Id = a.Id,
+                Name = a.Name,
+                Group_type = b.Name,
+                Supervisor_id = a.Supervisor_id,
+            }
+            ).
+            Join(_context.Users,
+            a => a.Supervisor_id,
+            b => b.Id,
+            (a, b) => new
+            {
+                Id = a.Id,
+                Name = a.Name,
+                Group_type = a.Group_type,
+                Supervisor_id = b.Name,
+            }
+            )
+            .ToList();
             List<Dictionary<string, object>> usersList = new List<Dictionary<string, object>>();
 
             foreach (var user in users)
@@ -137,7 +160,6 @@ namespace aspnet_edu_center.Controllers.Teacher
 
             foreach (var user in users)
             {
-                System.Console.WriteLine(user.Date);
                 usersList.Add(new Dictionary<string, object>() {
                     { "Id", user.Id },
                     { "Name", user.Name },
@@ -171,7 +193,7 @@ namespace aspnet_edu_center.Controllers.Teacher
             {
                 usersList.Add(new Dictionary<string, object>() {
                     { "Grades", user.Grades },
-                    { "Date", user.Date }
+                    { "Date", user.Date.ToShortDateString() }
                 });
             }
             var attens = _context.Users.
@@ -191,7 +213,7 @@ namespace aspnet_edu_center.Controllers.Teacher
             foreach (var atten in attens)
             {
                 obj.Add(new Dictionary<string, object>() {
-                    { "Date", atten.Date },
+                    { "Date", atten.Date.ToShortDateString() },
                     { "Camed", atten.Camed }
                 });
             }
@@ -208,7 +230,7 @@ namespace aspnet_edu_center.Controllers.Teacher
                     Document_id = a.Document_id,
                     Url = a.Url,
                     Doc_name = a.Doc_name,
-                    created_at = a.created_at,
+                    created_at = a.created_at.ToShortDateString(),
                     Document_Teacher = b.Doc_name
 
                 })
@@ -410,13 +432,13 @@ namespace aspnet_edu_center.Controllers.Teacher
                 string week = "";
                 switch (user.Week_day)
                 {
-                    case 1: week = "Понедельник"; break;
-                    case 2: week = "Вторник"; break;
-                    case 3: week = "Среда"; break;
-                    case 4: week = "Четверг"; break;
-                    case 5: week = "Пятница"; break;
-                    case 6: week = "Суббота"; break;
-                    case 7: week = "Воскресенье"; break;
+                    case 1: week = "Дүйсенбі"; break;
+                    case 2: week = "Сейсенбі"; break;
+                    case 3: week = "Сәрсенбі"; break;
+                    case 4: week = "Бейсенбі"; break;
+                    case 5: week = "Жұма"; break;
+                    case 6: week = "Сенбі"; break;
+                    case 7: week = "Жексенбі"; break;
                 }
                 usersList.Add(new Dictionary<string, object>() {
                     { "Id", user.Id },

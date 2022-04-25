@@ -1,27 +1,26 @@
 ﻿
 @{
-    ViewData["Title"] = "CreateTest";
+    ViewData["Title"] = "Тест құру";
 }
 
-<h1>CreateTest</h1>
+<h1>Тест құру</h1>
 
-<h4>Tests</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="CreateTest" asp-route-id=@ViewBag.Group_id>
             <div class="form-group">
-                <label class="control-label">Test name</label>
+                <label class="control-label">Тақырыбы</label>
                 <input class="form-control" name="name"/>
             </div>
             <div id="questions">
 
             </div>
 
-            <a href="#" class="btn btn-secondary mb-3" onclick="add_question()">Add question</a>
+            <a href="#" class="btn btn-primary text-dark mb-3" onclick="add_question()">Сұрақ қосу</a>
 
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Құру" class="btn btn-primary text-dark" />
             </div>
 
         </form>
@@ -29,7 +28,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Тізімге оралу</a>
 </div>
 
 <script>
@@ -39,14 +38,14 @@
         qi += 1;
         var el = document.getElementById("questions");
         var text = 
-                      '<label class="control-label">Question</label>'+
+                      '<label class="control-label">Сұрақ</label>'+
                       '<div class="input-group mb-3">'+
                           '<div class="input-group-prepend">'+
                             '<span class="input-group-text">' + qi + '</span>'+
                           '</div>'+
                           '<input class="form-control" name="quest['+qi+']">'+
                           '<div class="input-group-append">'+
-                            '<span class="input-group-text"><a href="#" onclick="add_answer(' + qi + ')">add answer</a></span>'+
+                            '<span class="input-group-text"><a href="#" onclick="add_answer(' + qi + ')">Жауап қосу</a></span>'+
                           '</div>'+
                         '</div>'+
                         '<div id="quest_'+qi+'" class="ml-3"></div>';
@@ -56,7 +55,7 @@
     function add_answer(qi) {
         var el = document.getElementById("quest_"+qi);
         var text = 
-                      '<label class="control-label">Answer</label>'+
+                      '<label class="control-label">Жауап</label>'+
                         '<div class="input-group mb-3">'+
                         '<div class="input-group-prepend">'+
                             '<span class="input-group-text">' + (++d[qi]) + '</span>'+

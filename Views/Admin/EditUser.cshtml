@@ -34,8 +34,13 @@
                 <span asp-validation-for="Tel_num" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Role_id" class="control-label">Рөл Id</label>
-                <input asp-for="Role_id" class="form-control" />
+                <label asp-for="Role_id" class="control-label">Рөл</label>
+                <select asp-for="Role_id" class="custom-select">
+                @foreach (var item in ViewBag.Roles)
+                {
+                   <option value=@item["Id"]>@item["Name"]</option>
+                }
+                </select>
                 <span asp-validation-for="Role_id" class="text-danger"></span>
             </div>
             <div class="form-group">

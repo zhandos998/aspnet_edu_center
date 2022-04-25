@@ -4,8 +4,10 @@
     ViewData["Title"] = "DetailsUser";
 }
 
-<h1>@ViewBag.tests[0].Name</h1>
+<h1>Тест</h1>
 
+<h4>@ViewBag.tests[0].Name</h4>
+<hr />
 <div class="row">
     <div class="col-md-6">
         <div class="form">
@@ -18,7 +20,7 @@
                 i+=1;
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">@i</span>
+                        <span class="input-group-text">Сұрақ №@i</span>
                     </div>
                     <input class="form-control" value="@item.Question_title " readonly>
                 </div>
@@ -29,7 +31,7 @@
                         <div id="quest_1" class="ml-5">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text">@j</span>
+                                    <span class="input-group-text">Жауап №@j</span>
                                 </div>
                                 <input class="form-control" value="@item1.Answer_text" readonly>
                             </div>

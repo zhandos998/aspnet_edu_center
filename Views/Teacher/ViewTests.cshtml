@@ -4,10 +4,10 @@
     ViewData["Title"] = "Tests";
 }
 
-<h1>Tests</h1>
+<h1>Тесттер</h1>
     
 <p>
-    <a asp-action="CreateTest" asp-route-id=@ViewBag.Group_id>Create Test</a>
+    <a asp-action="CreateTest" asp-route-id=@ViewBag.Group_id>Тест құру</a>
 </p>
     
     @*<form asp-action="AttendanceStudent" asp-controller="Teacher" asp-anti-forgery="true">*@
@@ -15,7 +15,7 @@
             <thead>
                 <tr>
                     <th>
-                        Name
+                        Тақырыбы
                     </th>
                     <th>
                     </th>
@@ -26,13 +26,13 @@
                 {
                     <tr>
                         <td>
-                            @*<a asp-action="DetailsUser" asp-route-id=@item["Id"] asp-route-group_id=@ViewBag.Group_id>@item["Name"]</a>*@
                             @item["Name"]
                         </td>
-
                         <td>
-                            <a asp-action="DeleteTest" asp-route-id="@item["Id"]" asp-route-group_id=@ViewBag.Group_id>Delete</a>
-                            <a asp-action="DetailsTest" asp-route-id="@item["Id"]">Details</a>
+                            <div class="btn-group rounded" role="group">
+                                <a class="text-dark btn border" asp-action="DeleteTest" asp-route-id="@item["Id"]" asp-route-group_id=@ViewBag.Group_id>Жою</a>
+                                <a class="text-dark btn border" asp-action="DetailsTest" asp-route-id="@item["Id"]">Нақтырақ</a>
+                            </div>
                         </td>
                     </tr>
                 }
