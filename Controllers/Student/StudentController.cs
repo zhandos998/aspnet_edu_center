@@ -177,6 +177,53 @@ namespace aspnet_edu_center.Controllers.Student
 
             return RedirectToAction("DetailsGroup", new { id = group_id });
         }
+        public IActionResult ViewTests(int group_id)
+        {
+            ViewBag.Group_id = group_id;
+            var users = _context.Tests.Where(x => x.Group_id == group_id);
+            List<Dictionary<string, object>> usersList = new List<Dictionary<string, object>>();
+
+            foreach (var user in users)
+            {
+                usersList.Add(new Dictionary<string, object>() {
+                    { "Id", user.Id },
+                    { "Name", user.Name }
+                });
+            }
+            return View(usersList);
+        }
+        public IActionResult DetailsTest(int id)
+        {
+            //ViewBag.Group_id = id;
+            var tests = _context.Tests.Where(x => x.Id == id);
+            var questions = _context.Questions.Where(x => x.Test_id == id);
+            var answer = _context.Answers.Where(o => questions.Any(h => h.Id == o.Question_id));
+            ViewBag.tests = tests.ToList();
+            ViewBag.questions = questions.ToList();
+            ViewBag.answers = answer.ToList();
+            return View();
+        }
+        public async Task<IActionResult> SendTest(int id, Dictionary<int, int> answer)
+        {
+            Users_Tests test = new Users_Tests { User_id = int.Parse(User.Identity.Name), Test_id = id };
+            _context.Users_Tests.Add(test);
+            await _context.SaveChangesAsync();
+
+            int Users_Tests_id = test.Id;
+
+            foreach (KeyValuePair<int, int> value in answer)
+            {
+                Users_Tests_Answers answers = new Users_Tests_Answers { 
+                    Users_Tests_Id = Users_Tests_id, 
+                    Answer_id = value.Value, 
+                    Question_id = value.Key
+                };
+                _context.Users_Tests_Answers.Add(answers);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("ViewTimetable");
+        }
 
 
 

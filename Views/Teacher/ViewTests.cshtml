@@ -1,13 +1,13 @@
 ﻿@model List<Dictionary<string, object>>
 
 @{
-    ViewData["Title"] = "Tests";
+    ViewData["Title"] = "Тесттер";
 }
 
 <h1>Тесттер</h1>
     
 <p>
-    <a asp-action="CreateTest" asp-route-id=@ViewBag.Group_id>Тест құру</a>
+    <a asp-action="CreateTest" asp-route-id=@ViewBag.Group_id asp-route-test_id=@ViewBag.Group_id>Тест құру</a>
 </p>
     
     @*<form asp-action="AttendanceStudent" asp-controller="Teacher" asp-anti-forgery="true">*@

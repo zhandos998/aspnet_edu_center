@@ -6,6 +6,8 @@
 
 <h1>@ViewBag.User_Name</h1>
 
+<h3>Бағалар</h3>
+
 <table class="table">
     <thead>
         <tr>
@@ -29,14 +31,35 @@
                 </td>
             </tr>
         }
-        <tr>
-            <td>
-            </td>
-            <td>
-            </td>
-        </tr>
     </tbody>
+</table>
 
+<h3>Өткен тесттері</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Тесттің аты
+            </th>
+            <th>
+                
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.Tests)
+        {
+            <tr>
+                <td>
+                    @item["Test_Name"]
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-action="ViewTestAnswers" asp-route-id="@item["Id"]">Жауаптарын қарау</a>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
 <h3>Келу-келмеу</h3>
@@ -123,15 +146,15 @@
     <div class="input-group w-25 mb-3">
         <input name="grade" type="number" class="form-control">
         <div class="input-group-append">
-            <input class="btn btn-primary text-dark" type="submit" value="Жіберу"/>
+            <input class="btn btn-primary text-dark" type="submit" value="Жіберу" />
         </div>
     </div>
 </form>
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        $('#checkbox').change(function () {
-            alert($(this).is(":checked"));
-        });
-    </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $('#checkbox').change(function () {
+        alert($(this).is(":checked"));
+    });
+</script>

@@ -219,6 +219,29 @@ namespace aspnet_edu_center.Controllers.Teacher
             }
             ViewBag.Attendances = obj;
             //---------------------------------
+            var tests = _context.Users_Tests.
+                Where(a => a.User_id == id).
+                Join(_context.Tests,
+                a => a.Test_id,
+                b => b.Id,
+                (a, b) => new
+                {
+                    Id = a.Id,
+                    Test_Name = b.Name,
+                }).ToList();
+
+
+            List<Dictionary<string, object>> testsList = new List<Dictionary<string, object>>();
+
+            foreach (var test in tests)
+            {
+                testsList.Add(new Dictionary<string, object>() {
+                    { "Id", test.Id },
+                    { "Test_Name", test.Test_Name},
+                });
+            }
+            ViewBag.Tests = testsList;
+            //---------------------------------
             var studDocs = _context.StudDocuments.
                 Where(a=>a.Student_id == id)
                 .Join(_context.Documents,
@@ -451,14 +474,64 @@ namespace aspnet_edu_center.Controllers.Teacher
         }
         public IActionResult DownloadStudDocument(int id)
         {
-            System.Console.WriteLine("------------------------------------------------------");
-            System.Console.WriteLine(id);
+
             string path = _context.StudDocuments.Find(id).Url;
             string file_path = _appEnvironment.WebRootPath + path;
             string file_type = "application/octet-stream";
             string file_name = _context.StudDocuments.Find(id).Doc_name;
             return PhysicalFile(file_path, file_type, file_name);
         }
+        public IActionResult ViewTestAnswers(int id)
+        {
+            ViewBag.Test_Name = _context.Users_Tests    
+                .Where(a => a.Id == id)
+                .Join(_context.Tests,
+                a => a.Test_id,
+                b => b.Id,
+                (a, b) => new
+                    {
+                        Name = b.Name,
+                    }
+                )
+                .ToList()[0].Name;
+
+            var tests = _context.Users_Tests_Answers
+            .Where(a => a.Users_Tests_Id == id)
+            .Join(_context.Questions,
+                a => a.Question_id,
+                b => b.Id,
+                (a, b) => new
+                {
+                    Question = b.Question_title,
+                    Answer_id = a.Answer_id,
+                }
+                )
+            .Join(_context.Answers,
+                a => a.Answer_id,
+                b => b.Id,
+                (a, b) => new
+                {
+                    Question = a.Question,
+                    Answer = b.Answer_text,
+                }
+                )
+            .ToList();
+            //Console.WriteLine(tests.Count);
+            List<Dictionary<string, object>> testList = new List<Dictionary<string, object>>();
+
+            foreach (var test in tests)
+            {
+                Console.WriteLine(1);
+                testList.Add(new Dictionary<string, object>() {
+                    { "Question", test.Question },
+                    { "Answer", test.Answer },
+                });
+            }
+            ViewBag.Answers = testList;
+            return View();
+            //return View(tests.Count.ToString());
+        }
+
 
 
 

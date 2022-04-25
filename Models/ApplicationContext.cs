@@ -18,6 +18,8 @@ namespace aspnet_edu_center.Models
         public DbSet<Document> Documents { get; set; }
         public DbSet<Timetable> Timetables { get; set; }
         public DbSet<StudDocument> StudDocuments { get; set; }
+        public DbSet<Users_Tests> Users_Tests { get; set; }
+        public DbSet<Users_Tests_Answers> Users_Tests_Answers { get; set; }
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
@@ -28,7 +30,6 @@ namespace aspnet_edu_center.Models
             modelBuilder.Entity<Group_User>().HasKey(c => new { c.User_Id, c.Group_Id });
             modelBuilder.Entity<Grade>().HasKey(c => new { c.User_id, c.Date });
             modelBuilder.Entity<Attendance>().HasKey(c => new { c.User_id, c.Date });
-            //modelBuilder.Entity<Answer>().HasNoKey();
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -1,0 +1,50 @@
+﻿@*@model List<Dictionary<string, object>>*@
+
+@{
+    ViewData["Title"] = "Тест";
+}
+
+<h1>Тест</h1>
+
+<h4>@ViewBag.tests[0].Name</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <div class="form">
+            <form asp-action="SendTest" asp-route-id=@ViewBag.tests[0].Id>
+                <div id="questions">
+                    @{var i = 0;}
+                    @foreach (var item in ViewBag.questions)
+                    {
+                        var j = 0;
+                        i += 1;
+                        <div class="input-group mb-3">
+                            @*<div class="input-group-prepend">
+                                <span class="input-group-text">Сұрақ №@i</span>
+                            </div>*@
+                            <h6>Сұрақ №@i . @item.Question_title</h6>
+                        </div>
+                        @foreach (var item1 in ViewBag.answers)
+                        {
+                            @if (item1.Question_id == item.Id)
+                            {
+                                j += 1;
+                                    <div class="input-group mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="answer[@item.Id]" type="radio" value="@item1.Id" required>
+                                            <label class="form-check-label" for="exampleRadios1">
+                                                @item1.Answer_text
+                                            </label>
+                                        </div>
+                                    </div>
+                            }
+                        }
+                    }
+                    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8MUTGml_VKVMuZC6szM-U3qdNWqTX_D-hCM6Wbb0bCYIi9nVBImhMDtRo-kaEnvJikf0ux6IpHb9m_0ZyftdeYxnkiLW2D4qi2ezLSz_mtPbp8SblBQe7jH9mZTm1qbfMnx2BSWmWfUx2I2gUJLe18a4FE_4IN2mw1MeBEwfRPAtNlgbV-s-5ssxMgLrgLYLvg">
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Жіберу" class="btn btn-primary text-dark" />
+                </div>
+            </form>
+        </div>
+</div>

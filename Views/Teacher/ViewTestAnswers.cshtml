@@ -1,0 +1,35 @@
+﻿@*@model List<Dictionary<string, object>>*@
+
+@{
+    ViewData["Title"] = "Тест";
+}
+
+<h1>Тест</h1>
+
+<h4>@ViewBag.Test_Name</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <div class="form">
+            <div id="questions">
+                @{var i = 0;}
+                @foreach (var item in ViewBag.Answers)
+                {
+                    i += 1;
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Сұрақ №@i</span>
+                        </div>
+                        <input class="form-control" value='@item["Question"]' readonly>
+                    </div>
+                    <div id="quest_1" class="ml-5">
+                        <div class="input-group mb-3">
+                            <input class="form-control" value='@item["Answer"]' readonly>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

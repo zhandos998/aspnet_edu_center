@@ -9,6 +9,9 @@
 
 <div class="btn-group rounded mb-5" role="group">
     <a class="text-dark btn border" href="/Student/ViewGrades">Бағаларды қарау</a>
+    <a class="text-dark btn border" asp-route-group_id=@ViewBag.Group_id asp-action="ViewTests">Тесттерді қарау</a>
+
+    @*<a class="text-dark btn border" href="/Student/ViewTests/" ViewBag.Group_id>Тесттерді қарау</a>*@
     <a class="text-dark btn border" href="/Student/ViewAttendance">Келу-келмеу саны</a>
     <!-- <a class="text-dark btn border" href="/Student/AddDocument">Документ қосу</a> -->
 </div>

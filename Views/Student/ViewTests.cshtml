@@ -1,0 +1,34 @@
+﻿@model List<Dictionary<string, object>>
+
+@{
+    ViewData["Title"] = "Тесттер";
+}
+
+<h1>Тесттер</h1>
+    
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Тақырыбы
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item["Name"]
+                        </td>
+                        <td>
+                            <div class="btn-group rounded" role="group">
+                                <a class="text-dark btn border" asp-action="DetailsTest" asp-route-id="@item["Id"]">Тестті өту</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
